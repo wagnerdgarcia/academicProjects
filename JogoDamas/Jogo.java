@@ -68,7 +68,9 @@ public class Jogo {
                     // Permite o Movimento em Diiagonal
                     if(podeIR == false){ 
                         // Só permite ir se tiver livre a casa
-                        Mover(origem, destino, peca);
+                        MovimentoSimples(origem, destino, peca);
+                        Captura(origem, destino, peca);
+                        System.out.println("pode ir");
                     }
                 }
             }
@@ -78,7 +80,9 @@ public class Jogo {
                     // Permite o Movimento em Diagonal
                     if(!podeIR){ 
                         // Só permite ir se tiver livre a casa
-                        Mover(origem, destino, peca);
+                        MovimentoSimples(origem, destino, peca);
+                        Captura(origem, destino, peca);
+                        System.out.println("pode ir");
                     }
                 }
             }
@@ -93,25 +97,58 @@ public class Jogo {
     /**
      * Faz os movimentos do jogo
      */
-    public void Mover(Casa origem, Casa destino, Peca peca) {
+    public void MovimentoSimples(Casa origem, Casa destino, Peca peca) {
         if(((peca.getTipo() == (peca.PEDRA_BRANCA)) && 
-          ((destino.getCasaY() == origem.getCasaY()+1) && 
-          ((destino.getCasaX() == origem.getCasaX()+1) || (destino.getCasaX() == origem.getCasaX()-1)))) ||
+            ((destino.getCasaY() == origem.getCasaY()+1) && 
+             ((destino.getCasaX() == origem.getCasaX()+1) || (destino.getCasaX() == origem.getCasaX()-1)))) ||
           ((peca.getTipo() == (peca.PEDRA_VERMELHA) && 
-          ((destino.getCasaY() == origem.getCasaY()-1) && 
-          ((destino.getCasaX() == origem.getCasaX()+1) || (destino.getCasaX() == origem.getCasaX()-1)))))){
+           ((destino.getCasaY() == origem.getCasaY()-1) && 
+            ((destino.getCasaX() == origem.getCasaX()+1) || (destino.getCasaX() == origem.getCasaX()-1)))))){
             // Movimento Simples de Peça
             peca.mover(destino);
             if(peca.getTipo() == peca.PEDRA_BRANCA){
                 vezJogar = false;
-                System.out.println("A vez de jogar é: " + vezJogar);
             } 
             else{
                 vezJogar = true;
-                System.out.println("A vez de jogar é: " + vezJogar);
             }
         }
     }
+    
+    /**
+     * Faz as capturas do jogo
+     */
+    public void Captura(Casa origem, Casa destino, Peca peca) {
+        boolean tipoPB = (peca.getTipo() == peca.PEDRA_BRANCA);
+        boolean tipoPV = (peca.getTipo() == peca.PEDRA_VERMELHA);
+        boolean tipoDB = (peca.getTipo() == peca.DAMA_BRANCA);
+        boolean tipoDV = (peca.getTipo() == peca.DAMA_VERMELHA);
+        boolean destino1 = ((destino.getCasaY() == origem.getCasaY()+2) && ((destino.getCasaX() == origem.getCasaX()+2)));
+        boolean destino2 = ((destino.getCasaY() == origem.getCasaY()+2) && ((destino.getCasaX() == origem.getCasaX()-2)));
+        boolean destino3 = ((destino.getCasaY() == origem.getCasaY()-2) && ((destino.getCasaX() == origem.getCasaX()-2)));
+        boolean destino4 = ((destino.getCasaY() == origem.getCasaY()-2) && ((destino.getCasaX() == origem.getCasaX()+2)));
+        if((tipoPB && tipoPV ) && destino1){
+            Casa verificar = tabuleiro.getCasa(origem.getCasaX()+1, origem.getCasaY()+1);
+            boolean verificaCasa = verificar.possuiPeca();
+            Peca objetivo = verificar.getPeca();
+            int tipoObjetivo = objetivo.getTipo();
+            boolean objetivoB = ((objetivo.getTipo() == objetivo.PEDRA_BRANCA) || 
+                                 (objetivo.getTipo() == objetivo.DAMA_BRANCA));
+            boolean objetivoV = ((objetivo.getTipo() == objetivo.PEDRA_VERMELHA) || 
+                                 (objetivo.getTipo() == objetivo.DAMA_VERMELHA));
+            if (tipoPB && objetivoV){
+                verificar.removerPeca();
+                peca.mover(destino);
+                System.out.println("Entrou");
+            }
+            else if (tipoPV && objetivoB){
+                verificar.removerPeca();
+                peca.mover(destino);
+                System.out.println("Entrou2");
+            }
+        }
+    }
+    
     /**
      * @return o Tabuleiro em jogo.
      */
