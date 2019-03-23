@@ -26,6 +26,20 @@ public class Casa {
     }
     
     /**
+     * Retorna o valor da casa em X
+     */
+    public int getCasaX() {
+        return x;
+    }
+    
+    /**
+     * Retorna o valor da casa em y
+     */
+    public int getCasaY() {
+        return y;
+    }
+    
+    /**
      * Remove a peca posicionada nesta casa, se houver.
      */
     public void removerPeca() {

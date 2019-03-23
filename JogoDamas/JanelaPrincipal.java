@@ -37,7 +37,7 @@ public class JanelaPrincipal extends JFrame {
         }
         else {
             casaClicadaDestino = casaClicada;
-            jogo.moverPeca(casaClicadaOrigem.getPosicaoX(), casaClicadaOrigem.getPosicaoY(),
+            jogo.Jogar(casaClicadaOrigem.getPosicaoX(), casaClicadaOrigem.getPosicaoY(),
                     casaClicadaDestino.getPosicaoX(), casaClicadaDestino.getPosicaoY());
             casaClicadaOrigem.atenuar();
             primeiroClique = true;
