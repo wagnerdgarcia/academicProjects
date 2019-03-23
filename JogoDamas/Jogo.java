@@ -59,21 +59,22 @@ public class Jogo {
         Casa destino = tabuleiro.getCasa(destinoX, destinoY);
         Peca peca = origem.getPeca();
         boolean podeIR = destino.possuiPeca();
-        int tipoDePeca = peca.getTipo();
         if ((nPecaBrancas != 0) || (nPecaVermelhas != 0)){
             //Verifica o numero de peças, quando não tiver mais peças diz quem ganhou
-            if ((tipoDePeca == peca.PEDRA_BRANCA) && (vezJogar)){
+            if ((peca.getTipo() == peca.PEDRA_BRANCA) && (vezJogar)){
                 //Verifica se o tipo de peça é branca
                     if (((destinoX%2 == 0) && destinoY % 2 == 0) ||((destinoX%2 != 0) && destinoY % 2 != 0)){ 
                     // Permite o Movimento em Diiagonal
                     if (!podeIR){ 
                         // Só permite ir se tiver livre a casa
                         MovimentoSimples(origem, destino, peca);
-                        Captura(origem, destino, peca);;
+                        Captura(origem, destino, peca);
+                        //CapturaSeguida(destino);
+                        vezJogar = !vezJogar;
                     }
                 }
             }
-            else if ((tipoDePeca == peca.PEDRA_VERMELHA) && (!vezJogar)){
+            else if ((peca.getTipo() == peca.PEDRA_VERMELHA) && (!vezJogar)){
                 //Verifica se o tipo de peça é branca
                     if (((destinoX%2 == 0) && destinoY % 2 == 0) ||((destinoX%2 != 0) && destinoY % 2 != 0)){ 
                     // Permite o Movimento em Diagonal
@@ -81,6 +82,8 @@ public class Jogo {
                         // Só permite ir se tiver livre a casa
                         MovimentoSimples(origem, destino, peca);
                         Captura(origem, destino, peca);
+                        //CapturaSeguida(destino);
+                        vezJogar = !vezJogar;
                     }
                 }
             }
@@ -104,12 +107,6 @@ public class Jogo {
             ((destino.getCasaX() == origem.getCasaX()+1) || (destino.getCasaX() == origem.getCasaX()-1)))))){
             // Movimento Simples de Peça
             peca.mover(destino);
-            if(peca.getTipo() == peca.PEDRA_BRANCA){
-                vezJogar = false;
-            } 
-            else{
-                vezJogar = true;
-            }
         }
     }
     
@@ -137,14 +134,12 @@ public class Jogo {
             if (tipoPB && objetivoV){
                 verificar.removerPeca();
                 peca.mover(destino);
-                nPecaVermelhas--;
-                vezJogar = !vezJogar;
+                nPecaVermelhas--;;
             }
             else if (tipoPV && objetivoB){
                 verificar.removerPeca();
                 peca.mover(destino);
                 nPecaBrancas--;
-                vezJogar = !vezJogar;
             }
         }
         else if((tipoPB || tipoPV ) && destino2){
@@ -159,13 +154,11 @@ public class Jogo {
                 verificar.removerPeca();
                 peca.mover(destino);
                 nPecaVermelhas--;
-                vezJogar = !vezJogar;
             }
             else if (tipoPV && objetivoB){
                 verificar.removerPeca();
                 peca.mover(destino);
                 nPecaBrancas--;
-                vezJogar = !vezJogar;
             }
         }
         if((tipoPB || tipoPV ) && destino3){
@@ -180,13 +173,11 @@ public class Jogo {
                 verificar.removerPeca();
                 peca.mover(destino);
                 nPecaVermelhas--;
-                vezJogar = !vezJogar;
             }
             else if (tipoPV && objetivoB){
                 verificar.removerPeca();
                 peca.mover(destino);
                 nPecaBrancas--;
-                vezJogar = !vezJogar;
             }
         }
         if((tipoPB || tipoPV ) && destino4){
@@ -201,13 +192,11 @@ public class Jogo {
                 verificar.removerPeca();
                 peca.mover(destino);
                 nPecaVermelhas--;
-                vezJogar = !vezJogar;
             }
             else if (tipoPV && objetivoB){
                 verificar.removerPeca();
                 peca.mover(destino);
                 nPecaBrancas--;
-                vezJogar = !vezJogar;
             }
         }
     }
@@ -227,20 +216,9 @@ public class Jogo {
         Casa objetivo1 = tabuleiro.getCasa(atual.getCasaX() + 1, atual.getCasaY() + 1);
         Peca alvo1 = objetivo1.getPeca();
         boolean alvo1B = ((alvo1.getTipo() == alvo1.PEDRA_BRANCA) || 
-                             (alvo1.getTipo() == alvo1.DAMA_BRANCA));
+                          (alvo1.getTipo() == alvo1.DAMA_BRANCA));
         boolean alvo1V = ((alvo1.getTipo() == alvo1.PEDRA_VERMELHA) || 
-                             (alvo1.getTipo() == alvo1.DAMA_VERMELHA));
-                             
-        if (alvo1V && tipoPB){ 
-            Captura(atual, destino1, peca);
-            nPecaVermelhas--;
-            vezJogar = !vezJogar;
-        }
-        else if(alvo1B && tipoPV){
-            Captura(atual, destino1, peca);
-            nPecaBrancas--;
-            vezJogar = !vezJogar;
-        }
+                          (alvo1.getTipo() == alvo1.DAMA_VERMELHA));
         
         Casa destino2 = tabuleiro.getCasa(atual.getCasaX() - 2, atual.getCasaY() + 2);
         Casa objetivo2 = tabuleiro.getCasa(atual.getCasaX() - 1, atual.getCasaY() + 1);
@@ -249,17 +227,7 @@ public class Jogo {
                           (alvo2.getTipo() == alvo2.DAMA_BRANCA));
         boolean alvo2V = ((alvo2.getTipo() == alvo2.PEDRA_VERMELHA) || 
                           (alvo2.getTipo() == alvo2.DAMA_VERMELHA));
-                             
-        if (alvo2V && tipoPB){ 
-            Captura(atual, destino2, peca);
-            nPecaVermelhas--;
-            vezJogar = !vezJogar;
-        }
-        else if(alvo2B && tipoPV){
-            Captura(atual, destino2, peca);
-            nPecaBrancas--;
-            vezJogar = !vezJogar;
-        }
+                          
         
         Casa destino3 = tabuleiro.getCasa(atual.getCasaX() - 2, atual.getCasaY() - 2);
         Casa objetivo3 = tabuleiro.getCasa(atual.getCasaX() - 1, atual.getCasaY() - 1);
@@ -269,17 +237,6 @@ public class Jogo {
         boolean alvo3V = ((alvo3.getTipo() == alvo3.PEDRA_VERMELHA) || 
                           (alvo3.getTipo() == alvo3.DAMA_VERMELHA));
                              
-        if (alvo3V && tipoPB){ 
-            Captura(atual, destino3, peca);
-            nPecaVermelhas--;
-            vezJogar = !vezJogar;
-        }
-        else if(alvo3B && tipoPV){
-            Captura(atual, destino3, peca);
-            nPecaBrancas--;
-            vezJogar = !vezJogar;
-        }
-        
         Casa destino4 = tabuleiro.getCasa(atual.getCasaX() + 2, atual.getCasaY() - 2);
         Casa objetivo4 = tabuleiro.getCasa(atual.getCasaX() + 1, atual.getCasaY() - 1);
         Peca alvo4 = objetivo4.getPeca();
@@ -287,16 +244,49 @@ public class Jogo {
                           (alvo4.getTipo() == alvo4.DAMA_BRANCA));
         boolean alvo4V = ((alvo4.getTipo() == alvo4.PEDRA_VERMELHA) || 
                           (alvo4.getTipo() == alvo4.DAMA_VERMELHA));
-                             
-        if (alvo4V && tipoPB){ 
-            Captura(atual, destino4, peca);
+                          
+        if (alvo1V && tipoPB){ 
+            objetivo1.removerPeca();
+            peca.mover(destino1);
             nPecaVermelhas--;
-            vezJogar = !vezJogar;
+        }
+        
+        else if(alvo1B && tipoPV){
+            objetivo1.removerPeca();
+            peca.mover(destino1);
+            nPecaBrancas--;
+        }
+                             
+        else if (alvo2V && tipoPB){ 
+            objetivo2.removerPeca();
+            peca.mover(destino2);
+            nPecaVermelhas--;
+        }
+        else if(alvo2B && tipoPV){
+            objetivo2.removerPeca();
+            peca.mover(destino2);
+            nPecaBrancas--;
+        }
+        
+        else if (alvo3V && tipoPB){ 
+            objetivo3.removerPeca();
+            peca.mover(destino3);
+            nPecaVermelhas--;        }
+        else if(alvo3B && tipoPV){
+            objetivo3.removerPeca();
+            peca.mover(destino3);
+            nPecaBrancas--;
+        }
+        
+        else if (alvo4V && tipoPB){ 
+            objetivo4.removerPeca();
+            peca.mover(destino4);
+            nPecaVermelhas--;
         }
         else if(alvo4B && tipoPV){
-            Captura(atual, destino4, peca);
+            objetivo4.removerPeca();
+            peca.mover(destino4);
             nPecaBrancas--;
-            vezJogar = !vezJogar;
         }
     }
     /**
