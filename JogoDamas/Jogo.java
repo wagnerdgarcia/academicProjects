@@ -17,6 +17,8 @@ public class Jogo {
     /* Numero de peças de cada jogador,Serão iniciadas durante o jogo */
     private int nPecaBrancas;
     private int nPecaVermelhas;
+    private boolean comerSeguido = false;
+    private Peca pecaAJogar = null;
 
     public Jogo() {
         tabuleiro = new Tabuleiro();
@@ -35,11 +37,13 @@ public class Jogo {
                     Casa casa = tabuleiro.getCasa(x, y);
                     Peca peca = new Peca(casa, Peca.PEDRA_BRANCA);
                     nPecaBrancas++;
+                    System.out.println(nPecaBrancas);
                 }
                 if((y > 4) && (((y%2!=0) && (x%2 != 0)) || ((y%2==0) && (x%2 == 0)))){
                     Casa casa = tabuleiro.getCasa(x, y);
                     Peca peca = new Peca(casa, Peca.PEDRA_VERMELHA);
-                    nPecaBrancas++;
+                    nPecaVermelhas++;
+                    System.out.println(nPecaVermelhas);
                 }
             }
         }
@@ -59,18 +63,24 @@ public class Jogo {
         Casa destino = tabuleiro.getCasa(destinoX, destinoY);
         Peca peca = origem.getPeca();
         boolean podeIR = destino.possuiPeca();
-        if ((nPecaBrancas != 0) || (nPecaVermelhas != 0)){
+        if ((nPecaBrancas != 0) && (nPecaVermelhas != 0)){
             //Verifica o numero de peças, quando não tiver mais peças diz quem ganhou
-            if ((peca.getTipo() == peca.PEDRA_BRANCA) && (vezJogar)){
+            if (((peca.getTipo() == peca.PEDRA_BRANCA) && (vezJogar)) || ((peca.getTipo() == peca.PEDRA_BRANCA) && (vezJogar))){
                 //Verifica se o tipo de peça é branca
-                    if (((destinoX%2 == 0) && destinoY % 2 == 0) ||((destinoX%2 != 0) && destinoY % 2 != 0)){ 
+                if (((destinoX%2 == 0) && destinoY % 2 == 0) ||((destinoX%2 != 0) && destinoY % 2 != 0)){ 
                     // Permite o Movimento em Diiagonal
-                    if (!podeIR){ 
-                        // Só permite ir se tiver livre a casa
-                        MovimentoSimples(origem, destino, peca);
-                        Captura(origem, destino, peca);
-                        //CapturaSeguida(destino);
-                        vezJogar = !vezJogar;
+                    if (!podeIR){
+                        if (!comerSeguido){
+                            // Só permite ir se tiver livre a casa
+                            MovimentoSimples(origem, destino, peca);
+                            Captura(origem, destino, peca);
+                            if (!comerSeguido){
+                                vezJogar = !vezJogar;
+                            }
+                        }
+                        else{
+                            Captura(origem, destino, pecaAJogar);
+                        }
                     }
                 }
             }
@@ -79,20 +89,26 @@ public class Jogo {
                     if (((destinoX%2 == 0) && destinoY % 2 == 0) ||((destinoX%2 != 0) && destinoY % 2 != 0)){ 
                     // Permite o Movimento em Diagonal
                     if(!podeIR){ 
-                        // Só permite ir se tiver livre a casa
-                        MovimentoSimples(origem, destino, peca);
-                        Captura(origem, destino, peca);
-                        //CapturaSeguida(destino);
-                        vezJogar = !vezJogar;
+                        if (!comerSeguido){
+                            // Só permite ir se tiver livre a casa
+                            MovimentoSimples(origem, destino, peca);
+                            Captura(origem, destino, peca);
+                            if (!comerSeguido){
+                                vezJogar = !vezJogar;
+                            }
+                        }
+                        else{
+                            Captura(origem, destino, pecaAJogar);
+                        }
                     }
                 }
             }
         }
-        else if(nPecaBrancas == 0){
-            JOptionPane.showMessageDialog(null, "O jogo Acabou\nAs Brancas Vencem!");
+        if(nPecaBrancas == 0){
+            JOptionPane.showMessageDialog(null, "O jogo Acabou\nAs Vermelhas Vencem!");
         }
         else if(nPecaVermelhas == 0){
-            JOptionPane.showMessageDialog(null, "O jogo Acabou\nAs Vermelhas Vencem!");
+            JOptionPane.showMessageDialog(null, "O jogo Acabou\nAs Brancas Vencem!");
         }
     }
     /**
@@ -134,12 +150,14 @@ public class Jogo {
             if (tipoPB && objetivoV){
                 verificar.removerPeca();
                 peca.mover(destino);
-                nPecaVermelhas--;;
+                nPecaVermelhas--;
+                CapturaSeguida(destino);
             }
             else if (tipoPV && objetivoB){
                 verificar.removerPeca();
                 peca.mover(destino);
                 nPecaBrancas--;
+                CapturaSeguida(destino);
             }
         }
         else if((tipoPB || tipoPV ) && destino2){
@@ -154,11 +172,13 @@ public class Jogo {
                 verificar.removerPeca();
                 peca.mover(destino);
                 nPecaVermelhas--;
+                CapturaSeguida(destino);
             }
             else if (tipoPV && objetivoB){
                 verificar.removerPeca();
                 peca.mover(destino);
                 nPecaBrancas--;
+                CapturaSeguida(destino);
             }
         }
         if((tipoPB || tipoPV ) && destino3){
@@ -173,11 +193,13 @@ public class Jogo {
                 verificar.removerPeca();
                 peca.mover(destino);
                 nPecaVermelhas--;
+                CapturaSeguida(destino);
             }
             else if (tipoPV && objetivoB){
                 verificar.removerPeca();
                 peca.mover(destino);
                 nPecaBrancas--;
+                CapturaSeguida(destino);
             }
         }
         if((tipoPB || tipoPV ) && destino4){
@@ -192,11 +214,13 @@ public class Jogo {
                 verificar.removerPeca();
                 peca.mover(destino);
                 nPecaVermelhas--;
+                CapturaSeguida(destino);
             }
             else if (tipoPV && objetivoB){
                 verificar.removerPeca();
                 peca.mover(destino);
                 nPecaBrancas--;
+                CapturaSeguida(destino);
             }
         }
     }
@@ -212,81 +236,30 @@ public class Jogo {
         boolean tipoDB = (peca.getTipo() == peca.DAMA_BRANCA);
         boolean tipoDV = (peca.getTipo() == peca.DAMA_VERMELHA);
         
-        Casa destino1 = tabuleiro.getCasa(atual.getCasaX() + 2, atual.getCasaY() + 2);
-        Casa objetivo1 = tabuleiro.getCasa(atual.getCasaX() + 1, atual.getCasaY() + 1);
-        Peca alvo1 = objetivo1.getPeca();
-        boolean alvo1B = ((alvo1.getTipo() == alvo1.PEDRA_BRANCA) || 
-                          (alvo1.getTipo() == alvo1.DAMA_BRANCA));
-        boolean alvo1V = ((alvo1.getTipo() == alvo1.PEDRA_VERMELHA) || 
-                          (alvo1.getTipo() == alvo1.DAMA_VERMELHA));
+        Casa verificar = tabuleiro.getCasa(atual.getCasaX()+1, atual.getCasaY()+1);
+        boolean possuiPeca = verificar.possuiPeca();
         
-        Casa destino2 = tabuleiro.getCasa(atual.getCasaX() - 2, atual.getCasaY() + 2);
-        Casa objetivo2 = tabuleiro.getCasa(atual.getCasaX() - 1, atual.getCasaY() + 1);
-        Peca alvo2 = objetivo2.getPeca();
-        boolean alvo2B = ((alvo2.getTipo() == alvo2.PEDRA_BRANCA) || 
-                          (alvo2.getTipo() == alvo2.DAMA_BRANCA));
-        boolean alvo2V = ((alvo2.getTipo() == alvo2.PEDRA_VERMELHA) || 
-                          (alvo2.getTipo() == alvo2.DAMA_VERMELHA));
-                          
-        
-        Casa destino3 = tabuleiro.getCasa(atual.getCasaX() - 2, atual.getCasaY() - 2);
-        Casa objetivo3 = tabuleiro.getCasa(atual.getCasaX() - 1, atual.getCasaY() - 1);
-        Peca alvo3 = objetivo3.getPeca();
-        boolean alvo3B = ((alvo3.getTipo() == alvo3.PEDRA_BRANCA) || 
-                          (alvo3.getTipo() == alvo3.DAMA_BRANCA));
-        boolean alvo3V = ((alvo3.getTipo() == alvo3.PEDRA_VERMELHA) || 
-                          (alvo3.getTipo() == alvo3.DAMA_VERMELHA));
-                             
-        Casa destino4 = tabuleiro.getCasa(atual.getCasaX() + 2, atual.getCasaY() - 2);
-        Casa objetivo4 = tabuleiro.getCasa(atual.getCasaX() + 1, atual.getCasaY() - 1);
-        Peca alvo4 = objetivo4.getPeca();
-        boolean alvo4B = ((alvo4.getTipo() == alvo4.PEDRA_BRANCA) || 
-                          (alvo4.getTipo() == alvo4.DAMA_BRANCA));
-        boolean alvo4V = ((alvo4.getTipo() == alvo4.PEDRA_VERMELHA) || 
-                          (alvo4.getTipo() == alvo4.DAMA_VERMELHA));
-                          
-        if (alvo1V && tipoPB){ 
-            objetivo1.removerPeca();
-            peca.mover(destino1);
-            nPecaVermelhas--;
-        }
-        
-        else if(alvo1B && tipoPV){
-            objetivo1.removerPeca();
-            peca.mover(destino1);
-            nPecaBrancas--;
-        }
-                             
-        else if (alvo2V && tipoPB){ 
-            objetivo2.removerPeca();
-            peca.mover(destino2);
-            nPecaVermelhas--;
-        }
-        else if(alvo2B && tipoPV){
-            objetivo2.removerPeca();
-            peca.mover(destino2);
-            nPecaBrancas--;
-        }
-        
-        else if (alvo3V && tipoPB){ 
-            objetivo3.removerPeca();
-            peca.mover(destino3);
-            nPecaVermelhas--;        }
-        else if(alvo3B && tipoPV){
-            objetivo3.removerPeca();
-            peca.mover(destino3);
-            nPecaBrancas--;
-        }
-        
-        else if (alvo4V && tipoPB){ 
-            objetivo4.removerPeca();
-            peca.mover(destino4);
-            nPecaVermelhas--;
-        }
-        else if(alvo4B && tipoPV){
-            objetivo4.removerPeca();
-            peca.mover(destino4);
-            nPecaBrancas--;
+        Peca objetivo1 = verificar.getPeca();
+        int tipoObjetivo1 = objetivo1.getTipo();
+        boolean objetivo1B = ((objetivo1.getTipo() == objetivo1.PEDRA_BRANCA) || 
+                             (objetivo1.getTipo() == objetivo1.DAMA_BRANCA));
+        boolean objetivo1V = ((objetivo1.getTipo() == objetivo1.PEDRA_VERMELHA) || 
+                             (objetivo1.getTipo() == objetivo1.DAMA_VERMELHA));
+
+    
+        if (possuiPeca){
+            Casa destino1 = tabuleiro.getCasa(atual.getCasaX()+2, atual.getCasaY()+2);
+            boolean fim1 = destino1.possuiPeca();
+            if (!fim1){
+                if(objetivo1V && tipoPB){
+                    comerSeguido = true;
+                    pecaAJogar = peca;
+                }
+                else if (objetivo1B && tipoPV){
+                    comerSeguido = true;
+                    pecaAJogar = peca;
+                }
+            }
         }
     }
     /**

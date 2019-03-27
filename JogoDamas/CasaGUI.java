@@ -21,6 +21,7 @@ public class CasaGUI extends JButton {
     public static final Color COR_ESCURA = new Color(65, 41, 1);
     private static final Color COR_DESTAQUE = new Color(0, 1, 0, 0.4f);
     
+
     // Icones das pecas
     private static final Icon PEDRA_BRANCA = new ImageIcon("imagens/pedra_branca.png");
     private static final Icon DAMA_BRANCA = new ImageIcon("imagens/dama_branca.png");
