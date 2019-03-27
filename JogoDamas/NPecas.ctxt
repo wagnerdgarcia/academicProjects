@@ -1,0 +1,19 @@
+#BlueJ class context
+comment0.target=NPecas
+comment0.text=\r\n\ Escreva\ a\ descri\u00E7\u00E3o\ da\ classe\ NPecas\ aqui.\r\n\ \r\n\ @author\ (seu\ nome)\ \r\n\ @version\ (n\u00FAmero\ de\ vers\u00E3o\ ou\ data)\r\n
+comment1.params=Branca\ Vermelhas
+comment1.target=NPecas(int,\ int)
+comment1.text=\r\n\ Construtor\ para\ objetos\ da\ classe\ NPecas\r\n
+comment2.params=
+comment2.target=void\ IncrementaBrancas()
+comment2.text=\r\n\ Incrementa\ o\ numero\ de\ pecas\ Brancas\ \r\n
+comment3.params=
+comment3.target=void\ IncrementaVermelhas()
+comment3.text=\r\n\ Incrementa\ o\ numero\ de\ pecas\ Vermelhas\r\n
+comment4.params=
+comment4.target=void\ DecrementaBrancas()
+comment4.text=\r\n\ Incrementa\ o\ numero\ de\ pecas\ Brancas\ \r\n
+comment5.params=
+comment5.target=void\ DecrementaVermelhas()
+comment5.text=\r\n\ Incrementa\ o\ numero\ de\ pecas\ Vermelhas\r\n
+numComments=6
