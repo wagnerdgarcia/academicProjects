@@ -65,7 +65,7 @@ public class Jogo {
         boolean podeIR = destino.possuiPeca();
         if ((nPecaBrancas != 0) && (nPecaVermelhas != 0)){
             //Verifica o numero de peças, quando não tiver mais peças diz quem ganhou
-            if (((peca.getTipo() == peca.PEDRA_BRANCA) && (vezJogar)) || ((peca.getTipo() == peca.PEDRA_BRANCA) && (vezJogar))){
+            if (((peca.getTipo() == peca.PEDRA_BRANCA) && (vezJogar)) || ((peca.getTipo() == peca.DAMA_BRANCA) && (vezJogar))){
                 //Verifica se o tipo de peça é branca
                 if (((destinoX%2 == 0) && destinoY % 2 == 0) ||((destinoX%2 != 0) && destinoY % 2 != 0)){ 
                     // Permite o Movimento em Diiagonal
@@ -77,16 +77,33 @@ public class Jogo {
                             if (!comerSeguido){
                                 vezJogar = !vezJogar;
                             }
+                            else{
+                                JOptionPane.showMessageDialog(null, "Continue Capturando\nCom a Mesma Peca");
+                            }
                         }
                         else{
                             Captura(origem, destino, pecaAJogar);
+                            System.out.println(comerSeguido);
+                            if (!comerSeguido){
+                                vezJogar = !vezJogar;
+                            }
+                            else{
+                                JOptionPane.showMessageDialog(null, "Continue Capturando\nCom a Mesma Peca");
+                            }
                         }
                     }
+                }
+                if ((destinoY == 7) && (peca.getTipo() == peca.PEDRA_BRANCA)){
+                    peca.virarDama(peca);
+                }
+                
+                if ((destinoY == 0) && (peca.getTipo() == peca.DAMA_BRANCA)){
+                    peca.virarPeca(peca);
                 }
             }
             else if ((peca.getTipo() == peca.PEDRA_VERMELHA) && (!vezJogar)){
                 //Verifica se o tipo de peça é branca
-                    if (((destinoX%2 == 0) && destinoY % 2 == 0) ||((destinoX%2 != 0) && destinoY % 2 != 0)){ 
+                if (((destinoX%2 == 0) && destinoY % 2 == 0) ||((destinoX%2 != 0) && destinoY % 2 != 0)){ 
                     // Permite o Movimento em Diagonal
                     if(!podeIR){ 
                         if (!comerSeguido){
@@ -96,11 +113,27 @@ public class Jogo {
                             if (!comerSeguido){
                                 vezJogar = !vezJogar;
                             }
+                            else{
+                                JOptionPane.showMessageDialog(null, "Continue Capturando\nCom a Mesma Peca");
+                            }
                         }
                         else{
                             Captura(origem, destino, pecaAJogar);
+                            System.out.println(comerSeguido);
+                            if (!comerSeguido){
+                                vezJogar = !vezJogar;
+                            }
+                            else{
+                                JOptionPane.showMessageDialog(null, "Continue Capturando\nCom a Mesma Peca");
+                            }
                         }
                     }
+                }
+                if ((destinoY == 7) && (peca.getTipo() == peca.DAMA_VERMELHA)){
+                    peca.virarPeca(peca);
+                }
+                if ((destinoY == 0) && (peca.getTipo() == peca.PEDRA_VERMELHA)){
+                    peca.virarDama(peca);
                 }
             }
         }
@@ -115,12 +148,12 @@ public class Jogo {
      * Faz os movimentos do jogo
      */
     public void MovimentoSimples(Casa origem, Casa destino, Peca peca) {
-        if(((peca.getTipo() == (peca.PEDRA_BRANCA)) && 
+        if((((peca.getTipo() == (peca.PEDRA_BRANCA)) || (peca.getTipo() == (peca.DAMA_VERMELHA))) && 
             ((destino.getCasaY() == origem.getCasaY()+1) && 
              ((destino.getCasaX() == origem.getCasaX()+1) || (destino.getCasaX() == origem.getCasaX()-1)))) ||
-          ((peca.getTipo() == (peca.PEDRA_VERMELHA) && 
+          (((peca.getTipo() == (peca.PEDRA_VERMELHA)) || (peca.getTipo() == (peca.DAMA_BRANCA))) && 
            ((destino.getCasaY() == origem.getCasaY()-1) && 
-            ((destino.getCasaX() == origem.getCasaX()+1) || (destino.getCasaX() == origem.getCasaX()-1)))))){
+            ((destino.getCasaX() == origem.getCasaX()+1) || (destino.getCasaX() == origem.getCasaX()-1))))){
             // Movimento Simples de Peça
             peca.mover(destino);
         }
@@ -139,7 +172,7 @@ public class Jogo {
         boolean destino2 = ((destino.getCasaY() == origem.getCasaY()+2) && ((destino.getCasaX() == origem.getCasaX()-2)));
         boolean destino3 = ((destino.getCasaY() == origem.getCasaY()-2) && ((destino.getCasaX() == origem.getCasaX()-2)));
         boolean destino4 = ((destino.getCasaY() == origem.getCasaY()-2) && ((destino.getCasaX() == origem.getCasaX()+2)));
-        if((tipoPB || tipoPV ) && destino1){
+        if(destino1){
             Casa verificar = tabuleiro.getCasa(origem.getCasaX()+1, origem.getCasaY()+1);
             Peca objetivo = verificar.getPeca();
             int tipoObjetivo = objetivo.getTipo();
@@ -147,20 +180,20 @@ public class Jogo {
                                  (objetivo.getTipo() == objetivo.DAMA_BRANCA));
             boolean objetivoV = ((objetivo.getTipo() == objetivo.PEDRA_VERMELHA) || 
                                  (objetivo.getTipo() == objetivo.DAMA_VERMELHA));
-            if (tipoPB && objetivoV){
+            if ((tipoPB || tipoDB) && (objetivoV)){
                 verificar.removerPeca();
                 peca.mover(destino);
                 nPecaVermelhas--;
                 CapturaSeguida(destino);
             }
-            else if (tipoPV && objetivoB){
+            else if ((tipoPV || tipoDV) && objetivoB){
                 verificar.removerPeca();
                 peca.mover(destino);
                 nPecaBrancas--;
                 CapturaSeguida(destino);
             }
         }
-        else if((tipoPB || tipoPV ) && destino2){
+        else if(destino2){
             Casa verificar = tabuleiro.getCasa(origem.getCasaX()-1, origem.getCasaY()+1);
             Peca objetivo = verificar.getPeca();
             int tipoObjetivo = objetivo.getTipo();
@@ -168,20 +201,20 @@ public class Jogo {
                                  (objetivo.getTipo() == objetivo.DAMA_BRANCA));
             boolean objetivoV = ((objetivo.getTipo() == objetivo.PEDRA_VERMELHA) || 
                                  (objetivo.getTipo() == objetivo.DAMA_VERMELHA));
-            if (tipoPB && objetivoV){
+            if ((tipoPB || tipoDB) && (objetivoV)){
                 verificar.removerPeca();
                 peca.mover(destino);
                 nPecaVermelhas--;
                 CapturaSeguida(destino);
             }
-            else if (tipoPV && objetivoB){
+            else if ((tipoPV || tipoDV) && objetivoB){
                 verificar.removerPeca();
                 peca.mover(destino);
                 nPecaBrancas--;
                 CapturaSeguida(destino);
             }
         }
-        if((tipoPB || tipoPV ) && destino3){
+        if(destino3){
             Casa verificar = tabuleiro.getCasa(origem.getCasaX()-1, origem.getCasaY()-1);
             Peca objetivo = verificar.getPeca();
             int tipoObjetivo = objetivo.getTipo();
@@ -189,20 +222,20 @@ public class Jogo {
                                  (objetivo.getTipo() == objetivo.DAMA_BRANCA));
             boolean objetivoV = ((objetivo.getTipo() == objetivo.PEDRA_VERMELHA) || 
                                  (objetivo.getTipo() == objetivo.DAMA_VERMELHA));
-            if (tipoPB && objetivoV){
+            if ((tipoPB || tipoDB) && (objetivoV)){
                 verificar.removerPeca();
                 peca.mover(destino);
                 nPecaVermelhas--;
                 CapturaSeguida(destino);
             }
-            else if (tipoPV && objetivoB){
+            else if ((tipoPV || tipoDV) && objetivoB){
                 verificar.removerPeca();
                 peca.mover(destino);
                 nPecaBrancas--;
                 CapturaSeguida(destino);
             }
         }
-        if((tipoPB || tipoPV ) && destino4){
+        if(destino4){
             Casa verificar = tabuleiro.getCasa(origem.getCasaX()+1, origem.getCasaY()-1);
             Peca objetivo = verificar.getPeca();
             int tipoObjetivo = objetivo.getTipo();
@@ -210,13 +243,13 @@ public class Jogo {
                                  (objetivo.getTipo() == objetivo.DAMA_BRANCA));
             boolean objetivoV = ((objetivo.getTipo() == objetivo.PEDRA_VERMELHA) || 
                                  (objetivo.getTipo() == objetivo.DAMA_VERMELHA));
-            if (tipoPB && objetivoV){
+            if ((tipoPB || tipoDB) && (objetivoV)){
                 verificar.removerPeca();
                 peca.mover(destino);
                 nPecaVermelhas--;
                 CapturaSeguida(destino);
             }
-            else if (tipoPV && objetivoB){
+            else if ((tipoPV || tipoDV) && objetivoB){
                 verificar.removerPeca();
                 peca.mover(destino);
                 nPecaBrancas--;
@@ -231,37 +264,437 @@ public class Jogo {
     public void CapturaSeguida(Casa atual){
         System.out.println("Captura Seguida");
         Peca peca = atual.getPeca();
-        boolean tipoPB = (peca.getTipo() == peca.PEDRA_BRANCA);
-        boolean tipoPV = (peca.getTipo() == peca.PEDRA_VERMELHA);
-        boolean tipoDB = (peca.getTipo() == peca.DAMA_BRANCA);
-        boolean tipoDV = (peca.getTipo() == peca.DAMA_VERMELHA);
-        if (((1 < atual.getCasaX()) || (atual.getCasaX() < 6)) && 
-            ((1 < atual.getCasaY()) || (atual.getCasaY() < 6))){
-            Casa verificar = tabuleiro.getCasa(atual.getCasaX()+1, atual.getCasaY()+1);
-            boolean possuiPeca = verificar.possuiPeca();
-            
-            Peca objetivo1 = verificar.getPeca();
-            int tipoObjetivo1 = objetivo1.getTipo();
-            boolean objetivo1B = ((objetivo1.getTipo() == objetivo1.PEDRA_BRANCA) || 
-                                 (objetivo1.getTipo() == objetivo1.DAMA_BRANCA));
-            boolean objetivo1V = ((objetivo1.getTipo() == objetivo1.PEDRA_VERMELHA) || 
-                                 (objetivo1.getTipo() == objetivo1.DAMA_VERMELHA));
-    
-        
-            if (possuiPeca){
-                Casa destino1 = tabuleiro.getCasa(atual.getCasaX()+2, atual.getCasaY()+2);
-                boolean fim1 = destino1.possuiPeca();
-                if (!fim1){
-                    if(objetivo1V && tipoPB){
+        boolean tipoPB = ((peca.getTipo() == peca.PEDRA_BRANCA) || (peca.getTipo() == peca.DAMA_BRANCA));
+        boolean tipoPV = ((peca.getTipo() == peca.PEDRA_VERMELHA) || (peca.getTipo() == peca.DAMA_VERMELHA));
+        if (((1 < atual.getCasaX()) && (atual.getCasaX() < 6)) && 
+            ((1 < atual.getCasaY()) && (atual.getCasaY() < 6))){
+            //Verifica se a Casa do 1º Quadrante tem peça
+            Casa verificar1 = tabuleiro.getCasa(atual.getCasaX()+1, atual.getCasaY()+1);
+            boolean possuiPeca1 = verificar1.possuiPeca();
+                   
+            if (possuiPeca1){
+                Peca objetivo = verificar1.getPeca();
+                int tipoObjetivo = objetivo.getTipo();
+                boolean objetivoB = ((objetivo.getTipo() == objetivo.PEDRA_BRANCA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_BRANCA));
+                boolean objetivoV = ((objetivo.getTipo() == objetivo.PEDRA_VERMELHA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_VERMELHA));
+                
+                Casa destino = tabuleiro.getCasa(atual.getCasaX()+2, atual.getCasaY()+2);
+                boolean fim = destino.possuiPeca();
+                if (!fim){
+                    if(objetivoV && tipoPB){
                         comerSeguido = true;
                         pecaAJogar = peca;
                     }
-                    else if (objetivo1B && tipoPV){
+                    else if (objetivoB && tipoPV){
                         comerSeguido = true;
                         pecaAJogar = peca;
                     }
                 }
             }
+            
+            //Verifica se a Casa do 2º Quadrante tem peça
+            Casa verificar2 = tabuleiro.getCasa(atual.getCasaX()-1, atual.getCasaY()+1);
+            boolean possuiPeca2 = verificar2.possuiPeca();
+                   
+            if (possuiPeca2){
+                Peca objetivo = verificar2.getPeca();
+                int tipoObjetivo = objetivo.getTipo();
+                boolean objetivoB = ((objetivo.getTipo() == objetivo.PEDRA_BRANCA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_BRANCA));
+                boolean objetivoV = ((objetivo.getTipo() == objetivo.PEDRA_VERMELHA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_VERMELHA));
+                
+                Casa destino = tabuleiro.getCasa(atual.getCasaX()-2, atual.getCasaY()+2);
+                boolean fim = destino.possuiPeca();
+                if (!fim){
+                    if(objetivoV && tipoPB){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                    else if (objetivoB && tipoPV){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                }
+            }
+            //Verifica se a Casa do 3º Quadrante tem peça
+            Casa verificar3 = tabuleiro.getCasa(atual.getCasaX()-1, atual.getCasaY()-1);
+            boolean possuiPeca3 = verificar3.possuiPeca();
+                   
+            if (possuiPeca3){
+                Peca objetivo = verificar3.getPeca();
+                int tipoObjetivo = objetivo.getTipo();
+                boolean objetivoB = ((objetivo.getTipo() == objetivo.PEDRA_BRANCA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_BRANCA));
+                boolean objetivoV = ((objetivo.getTipo() == objetivo.PEDRA_VERMELHA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_VERMELHA));
+                
+                Casa destino = tabuleiro.getCasa(atual.getCasaX()-2, atual.getCasaY()-2);
+                boolean fim = destino.possuiPeca();
+                if (!fim){
+                    if(objetivoV && tipoPB){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                    else if (objetivoB && tipoPV){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                }
+            }
+            //Verifica se a Casa do 4º Quadrante tem peça
+            Casa verificar4 = tabuleiro.getCasa(atual.getCasaX()+1, atual.getCasaY()-1);
+            boolean possuiPeca4 = verificar4.possuiPeca();
+                   
+            if (possuiPeca4){
+                Peca objetivo = verificar4.getPeca();
+                int tipoObjetivo = objetivo.getTipo();
+                boolean objetivoB = ((objetivo.getTipo() == objetivo.PEDRA_BRANCA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_BRANCA));
+                boolean objetivoV = ((objetivo.getTipo() == objetivo.PEDRA_VERMELHA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_VERMELHA));
+                
+                Casa destino = tabuleiro.getCasa(atual.getCasaX()+2, atual.getCasaY()-2);
+                boolean fim = destino.possuiPeca();
+                if (!fim){
+                    if(objetivoV && tipoPB){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                    else if (objetivoB && tipoPV){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                }
+            }
+        }
+        else if((1 >= atual.getCasaX()) && (1 >= atual.getCasaY())){
+            //Verifica o Canto do 3º Quadrante
+            Casa verificar1 = tabuleiro.getCasa(atual.getCasaX()+1, atual.getCasaY()+1);
+            boolean possuiPeca1 = verificar1.possuiPeca();
+                   
+            if (possuiPeca1){
+                Peca objetivo = verificar1.getPeca();
+                int tipoObjetivo = objetivo.getTipo();
+                boolean objetivoB = ((objetivo.getTipo() == objetivo.PEDRA_BRANCA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_BRANCA));
+                boolean objetivoV = ((objetivo.getTipo() == objetivo.PEDRA_VERMELHA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_VERMELHA));
+                
+                Casa destino = tabuleiro.getCasa(atual.getCasaX()+2, atual.getCasaY()+2);
+                boolean fim = destino.possuiPeca();
+                if (!fim){
+                    if(objetivoV && tipoPB){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                    else if (objetivoB && tipoPV){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                }
+            }
+        }
+        else if ((1 >= atual.getCasaX()) && 
+                 ((1 < atual.getCasaY()) && (atual.getCasaY() < 6))){
+            //Verifica se a Casa do 1º Quadrante tem peça
+            Casa verificar1 = tabuleiro.getCasa(atual.getCasaX()+1, atual.getCasaY()+1);
+            boolean possuiPeca1 = verificar1.possuiPeca();
+                   
+            if (possuiPeca1){
+                Peca objetivo = verificar1.getPeca();
+                int tipoObjetivo = objetivo.getTipo();
+                boolean objetivoB = ((objetivo.getTipo() == objetivo.PEDRA_BRANCA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_BRANCA));
+                boolean objetivoV = ((objetivo.getTipo() == objetivo.PEDRA_VERMELHA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_VERMELHA));
+                
+                Casa destino = tabuleiro.getCasa(atual.getCasaX()+2, atual.getCasaY()+2);
+                boolean fim = destino.possuiPeca();
+                if (!fim){
+                    if(objetivoV && tipoPB){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                    else if (objetivoB && tipoPV){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                }
+            }
+            
+            //Verifica se a Casa do 4º Quadrante tem peça
+            
+            Casa verificar4 = tabuleiro.getCasa(atual.getCasaX()+1, atual.getCasaY()-1);
+            boolean possuiPeca4 = verificar4.possuiPeca();
+                   
+            if (possuiPeca4){
+                Peca objetivo = verificar4.getPeca();
+                int tipoObjetivo = objetivo.getTipo();
+                boolean objetivoB = ((objetivo.getTipo() == objetivo.PEDRA_BRANCA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_BRANCA));
+                boolean objetivoV = ((objetivo.getTipo() == objetivo.PEDRA_VERMELHA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_VERMELHA));
+                
+                Casa destino = tabuleiro.getCasa(atual.getCasaX()+2, atual.getCasaY()-2);
+                boolean fim = destino.possuiPeca();
+                if (!fim){
+                    if(objetivoV && tipoPB){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                    else if (objetivoB && tipoPV){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                }
+            }
+        }
+        else if ((atual.getCasaX() >= 6) && (1 >= atual.getCasaY())){
+            //Verifica se a Casa do 4º Quadrante tem peça
+            Casa verificar4 = tabuleiro.getCasa(atual.getCasaX()+1, atual.getCasaY()-1);
+            boolean possuiPeca4 = verificar4.possuiPeca();
+                   
+            if (possuiPeca4){
+                Peca objetivo = verificar4.getPeca();
+                int tipoObjetivo = objetivo.getTipo();
+                boolean objetivoB = ((objetivo.getTipo() == objetivo.PEDRA_BRANCA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_BRANCA));
+                boolean objetivoV = ((objetivo.getTipo() == objetivo.PEDRA_VERMELHA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_VERMELHA));
+                
+                Casa destino = tabuleiro.getCasa(atual.getCasaX()+2, atual.getCasaY()-2);
+                boolean fim = destino.possuiPeca();
+                if (!fim){
+                    if(objetivoV && tipoPB){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                    else if (objetivoB && tipoPV){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                }
+            }
+        }
+        else if (((1 < atual.getCasaX()) && (atual.getCasaX() < 6)) && (atual.getCasaY() >= 6)){
+            //Verifica se a Casa do 3º Quadrante tem peça
+            Casa verificar3 = tabuleiro.getCasa(atual.getCasaX()-1, atual.getCasaY()-1);
+            boolean possuiPeca3 = verificar3.possuiPeca();
+                   
+            if (possuiPeca3){
+                Peca objetivo = verificar3.getPeca();
+                int tipoObjetivo = objetivo.getTipo();
+                boolean objetivoB = ((objetivo.getTipo() == objetivo.PEDRA_BRANCA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_BRANCA));
+                boolean objetivoV = ((objetivo.getTipo() == objetivo.PEDRA_VERMELHA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_VERMELHA));
+                
+                Casa destino = tabuleiro.getCasa(atual.getCasaX()-2, atual.getCasaY()-2);
+                boolean fim = destino.possuiPeca();
+                if (!fim){
+                    if(objetivoV && tipoPB){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                    else if (objetivoB && tipoPV){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                }
+            }
+            
+            //Verifica se a Casa do 4º Quadrante tem peça
+            Casa verificar4 = tabuleiro.getCasa(atual.getCasaX()+1, atual.getCasaY()-1);
+            boolean possuiPeca4 = verificar4.possuiPeca();
+                   
+            if (possuiPeca4){
+                Peca objetivo = verificar4.getPeca();
+                int tipoObjetivo = objetivo.getTipo();
+                boolean objetivoB = ((objetivo.getTipo() == objetivo.PEDRA_BRANCA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_BRANCA));
+                boolean objetivoV = ((objetivo.getTipo() == objetivo.PEDRA_VERMELHA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_VERMELHA));
+                
+                Casa destino = tabuleiro.getCasa(atual.getCasaX()+2, atual.getCasaY()-2);
+                boolean fim = destino.possuiPeca();
+                if (!fim){
+                    if(objetivoV && tipoPB){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                    else if (objetivoB && tipoPV){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                }
+            }
+        }
+        
+        else if (((atual.getCasaX() <= 6)) && (atual.getCasaY() <= 6)){
+            //Verifica se a Casa do 3º Quadrante tem peça
+            Casa verificar3 = tabuleiro.getCasa(atual.getCasaX()-1, atual.getCasaY()-1);
+            boolean possuiPeca3 = verificar3.possuiPeca();
+                   
+            if (possuiPeca3){
+                Peca objetivo = verificar3.getPeca();
+                int tipoObjetivo = objetivo.getTipo();
+                boolean objetivoB = ((objetivo.getTipo() == objetivo.PEDRA_BRANCA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_BRANCA));
+                boolean objetivoV = ((objetivo.getTipo() == objetivo.PEDRA_VERMELHA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_VERMELHA));
+                
+                Casa destino = tabuleiro.getCasa(atual.getCasaX()-2, atual.getCasaY()-2);
+                boolean fim = destino.possuiPeca();
+                if (!fim){
+                    if(objetivoV && tipoPB){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                    else if (objetivoB && tipoPV){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                }
+            }
+        }
+        else if((atual.getCasaX() >= 6) && ((1 < atual.getCasaY()) && (atual.getCasaY() < 6))){
+            //Verifica se a Casa do 2º Quadrante tem peça
+            Casa verificar2 = tabuleiro.getCasa(atual.getCasaX()-1, atual.getCasaY()+1);
+            boolean possuiPeca2 = verificar2.possuiPeca();
+                   
+            if (possuiPeca2){
+                Peca objetivo = verificar2.getPeca();
+                int tipoObjetivo = objetivo.getTipo();
+                boolean objetivoB = ((objetivo.getTipo() == objetivo.PEDRA_BRANCA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_BRANCA));
+                boolean objetivoV = ((objetivo.getTipo() == objetivo.PEDRA_VERMELHA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_VERMELHA));
+                
+                Casa destino = tabuleiro.getCasa(atual.getCasaX()-2, atual.getCasaY()+2);
+                boolean fim = destino.possuiPeca();
+                if (!fim){
+                    if(objetivoV && tipoPB){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                    else if (objetivoB && tipoPV){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                }
+            }
+            //Verifica se a Casa do 3º Quadrante tem peça
+            Casa verificar3 = tabuleiro.getCasa(atual.getCasaX()-1, atual.getCasaY()-1);
+            boolean possuiPeca3 = verificar3.possuiPeca();
+                   
+            if (possuiPeca3){
+                Peca objetivo = verificar3.getPeca();
+                int tipoObjetivo = objetivo.getTipo();
+                boolean objetivoB = ((objetivo.getTipo() == objetivo.PEDRA_BRANCA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_BRANCA));
+                boolean objetivoV = ((objetivo.getTipo() == objetivo.PEDRA_VERMELHA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_VERMELHA));
+                
+                Casa destino = tabuleiro.getCasa(atual.getCasaX()-2, atual.getCasaY()-2);
+                boolean fim = destino.possuiPeca();
+                if (!fim){
+                    if(objetivoV && tipoPB){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                    else if (objetivoB && tipoPV){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                }
+            }
+        }
+        
+        else if((atual.getCasaX() >= 6) && (atual.getCasaY() <= 1)){
+            //Verifica se a Casa do 2º Quadrante tem peça
+            Casa verificar2 = tabuleiro.getCasa(atual.getCasaX()-1, atual.getCasaY()+1);
+            boolean possuiPeca2 = verificar2.possuiPeca();
+                   
+            if (possuiPeca2){
+                Peca objetivo = verificar2.getPeca();
+                int tipoObjetivo = objetivo.getTipo();
+                boolean objetivoB = ((objetivo.getTipo() == objetivo.PEDRA_BRANCA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_BRANCA));
+                boolean objetivoV = ((objetivo.getTipo() == objetivo.PEDRA_VERMELHA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_VERMELHA));
+                
+                Casa destino = tabuleiro.getCasa(atual.getCasaX()-2, atual.getCasaY()+2);
+                boolean fim = destino.possuiPeca();
+                if (!fim){
+                    if(objetivoV && tipoPB){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                    else if (objetivoB && tipoPV){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                }
+            }
+        }
+        else if(((atual.getCasaX() > 1) && (atual.getCasaX() < 6)) && (1 < atual.getCasaY())){
+            //Verifica se a Casa do 1º Quadrante tem peça
+            Casa verificar1 = tabuleiro.getCasa(atual.getCasaX()+1, atual.getCasaY()+1);
+            boolean possuiPeca1 = verificar1.possuiPeca();
+                   
+            if (possuiPeca1){
+                Peca objetivo = verificar1.getPeca();
+                int tipoObjetivo = objetivo.getTipo();
+                boolean objetivoB = ((objetivo.getTipo() == objetivo.PEDRA_BRANCA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_BRANCA));
+                boolean objetivoV = ((objetivo.getTipo() == objetivo.PEDRA_VERMELHA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_VERMELHA));
+                
+                Casa destino = tabuleiro.getCasa(atual.getCasaX()+2, atual.getCasaY()+2);
+                boolean fim = destino.possuiPeca();
+                if (!fim){
+                    if(objetivoV && tipoPB){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                    else if (objetivoB && tipoPV){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                }
+            }
+
+            //Verifica se a Casa do 2º Quadrante tem peça
+            Casa verificar2 = tabuleiro.getCasa(atual.getCasaX()-1, atual.getCasaY()+1);
+            boolean possuiPeca2 = verificar2.possuiPeca();
+                   
+            if (possuiPeca2){
+                Peca objetivo = verificar2.getPeca();
+                int tipoObjetivo = objetivo.getTipo();
+                boolean objetivoB = ((objetivo.getTipo() == objetivo.PEDRA_BRANCA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_BRANCA));
+                boolean objetivoV = ((objetivo.getTipo() == objetivo.PEDRA_VERMELHA) || 
+                                     (objetivo.getTipo() == objetivo.DAMA_VERMELHA));
+                
+                Casa destino = tabuleiro.getCasa(atual.getCasaX()-2, atual.getCasaY()+2);
+                boolean fim = destino.possuiPeca();
+                if (!fim){
+                    if(objetivoV && tipoPB){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                    else if (objetivoB && tipoPV){
+                        comerSeguido = true;
+                        pecaAJogar = peca;
+                    }
+                }
+            }
+        }
+        else{
+            System.out.println("Não Entrou Comer Seguido");
         }
     }
     /**

@@ -47,4 +47,34 @@ public class Peca {
     public int getTipo() {
         return tipo;
     }
+    
+    /**
+     * Transforma a Pedra em Dama
+     */
+    public void virarDama(Peca peca){
+        boolean tipoPB = peca.getTipo() == PEDRA_BRANCA;
+        boolean tipoPV = peca.getTipo() == PEDRA_VERMELHA;
+        
+        if(tipoPB){
+            tipo = DAMA_BRANCA;
+        }
+        if(tipoPV){
+            tipo = DAMA_VERMELHA;
+        }
+    }
+    
+    /**
+     * Transforma a Dama em Pedra
+     */
+    public void virarPeca(Peca peca){
+        boolean tipoPB = peca.getTipo() == DAMA_BRANCA;
+        boolean tipoPV = peca.getTipo() == DAMA_VERMELHA;
+        
+        if(tipoPB){
+            tipo = PEDRA_BRANCA;
+        }
+        if(tipoPV){
+            tipo = PEDRA_VERMELHA;
+        }
+    }
 }
