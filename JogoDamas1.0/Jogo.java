@@ -72,19 +72,13 @@ public class Jogo {
                             // Só permite ir se tiver livre a casa
                             MovimentoSimples(origem, destino, peca);
                             Captura(origem, destino, peca);
-                            if (!comerSeguido){
-                                vezJogar = !vezJogar;
-                            }
-                            else{
+                            if (comerSeguido){
                                 JOptionPane.showMessageDialog(null, "Continue Capturando\nCom a Mesma Peca");
                             }
                         }
                         else{
                             Captura(origem, destino, pecaAJogar);
-                            if (!comerSeguido){
-                                vezJogar = !vezJogar;
-                            }
-                            else{
+                            if (comerSeguido){
                                 JOptionPane.showMessageDialog(null, "Continue Capturando\nCom a Mesma Peca");
                             }
                         }
@@ -100,19 +94,13 @@ public class Jogo {
                             // Só permite ir se tiver livre a casa
                             MovimentoSimples(origem, destino, peca);
                             Captura(origem, destino, peca);
-                            if (!comerSeguido){
-                                vezJogar = !vezJogar;
-                            }
-                            else{
+                            if (comerSeguido){
                                 JOptionPane.showMessageDialog(null, "Continue Capturando\nCom a Mesma Peca");
                             }
                         }
                         else{
                             Captura(origem, destino, pecaAJogar);
-                            if (!comerSeguido){
-                                vezJogar = !vezJogar;
-                            }
-                            else{
+                            if (comerSeguido){
                                 JOptionPane.showMessageDialog(null, "Continue Capturando\nCom a Mesma Peca");
                             }
                         }
@@ -141,6 +129,7 @@ public class Jogo {
             peca.mover(destino);
             peca.virarDama(peca, destino);
             peca.virarPeca(peca, destino);
+            vezJogar = !vezJogar;
         }
     }
     
@@ -171,7 +160,9 @@ public class Jogo {
                 peca.virarDama(peca, destino);
                 peca.virarPeca(peca, destino);
                 CapturaSeguida(destino);
-                
+                if (!comerSeguido){
+                    vezJogar = !vezJogar;
+                }
             }
             else if ((tipoPV || tipoDV) && objetivoB){
                 verificar.removerPeca();
@@ -180,6 +171,9 @@ public class Jogo {
                 peca.virarDama(peca, destino);
                 peca.virarPeca(peca, destino);
                 CapturaSeguida(destino);
+                if (!comerSeguido){
+                    vezJogar = !vezJogar;
+                }
             }
         }
         else if(destino2){
@@ -197,6 +191,9 @@ public class Jogo {
                 peca.virarDama(peca, destino);
                 peca.virarPeca(peca, destino);
                 CapturaSeguida(destino);
+                if (!comerSeguido){
+                    vezJogar = !vezJogar;
+                }
             }
             else if ((tipoPV || tipoDV) && objetivoB){
                 verificar.removerPeca();
@@ -205,6 +202,9 @@ public class Jogo {
                 peca.virarDama(peca, destino);
                 peca.virarPeca(peca, destino);
                 CapturaSeguida(destino);
+                if (!comerSeguido){
+                    vezJogar = !vezJogar;
+                }
             }
         }
         if(destino3){
@@ -222,6 +222,9 @@ public class Jogo {
                 peca.virarDama(peca, destino);
                 peca.virarPeca(peca, destino);
                 CapturaSeguida(destino);
+                if (!comerSeguido){
+                    vezJogar = !vezJogar;
+                }
             }
             else if ((tipoPV || tipoDV) && objetivoB){
                 verificar.removerPeca();
@@ -230,6 +233,9 @@ public class Jogo {
                 peca.virarDama(peca, destino);
                 peca.virarPeca(peca, destino);
                 CapturaSeguida(destino);
+                if (!comerSeguido){
+                    vezJogar = !vezJogar;
+                }
             }
         }
         if(destino4){
@@ -247,6 +253,9 @@ public class Jogo {
                 peca.virarDama(peca, destino);
                 peca.virarPeca(peca, destino);
                 CapturaSeguida(destino);
+                if (!comerSeguido){
+                    vezJogar = !vezJogar;
+                }
             }
             else if ((tipoPV || tipoDV) && objetivoB){
                 verificar.removerPeca();
@@ -255,6 +264,9 @@ public class Jogo {
                 peca.virarDama(peca, destino);
                 peca.virarPeca(peca, destino);
                 CapturaSeguida(destino);
+                if (!comerSeguido){
+                    vezJogar = !vezJogar;
+                }
             }
         }
     }

@@ -16,11 +16,16 @@ import javax.swing.JButton;
  */
 public class CasaGUI extends JButton {
 
-    // Constantes 
-    public static final Color COR_CLARA = new Color(182, 155, 76);
-    public static final Color COR_ESCURA = new Color(65, 41, 1);
-    private static final Color COR_DESTAQUE = new Color(0, 1, 0, 0.4f);
+    /** Constantes 
+    *public static final Color COR_CLARA = new Color(182, 155, 76);
+    *public static final Color COR_ESCURA = new Color(65, 41, 1);
+    *private static final Color COR_DESTAQUE = new Color(0, 1, 0, 0.4f);
+    */
     
+    // Constantes 
+    public static final Color COR_CLARA = new Color(147, 240, 164);
+    public static final Color COR_ESCURA = new Color(3, 79, 68);
+    private static final Color COR_DESTAQUE = new Color(255, 255, 102);
 
     // Icones das pecas
     private static final Icon PEDRA_BRANCA = new ImageIcon("imagens/pedra_branca.png");
