@@ -12,9 +12,9 @@ import javax.swing.JOptionPane;
 public class Jogo {
 
     private Tabuleiro tabuleiro;
-    boolean vezJogar;
+    private boolean vezJogar;
     
-    // Numero de Pecas do Jogo 
+    // Numero de Pecas do Jogo, serão iniciadas durante a classe
     private int nPecasBrancas;
     private int nPecasVermelhas;
 
@@ -26,8 +26,6 @@ public class Jogo {
         tabuleiro = new Tabuleiro();
         criarPecas();
         vezJogar = true;
-        nPecasBrancas = 0;
-        nPecasVermelhas = 0;
         comerSeguido = false;
         pecaAJogar = null;
     }
@@ -37,6 +35,7 @@ public class Jogo {
      * Utilizado na inicializa�ao do jogo.
      */
     private void criarPecas() {
+        
         for (int y = 0; y<8; y++){
             for(int x = 0; x<8; x++){
                 if((y < 3) && (((y%2!=0) && (x%2 != 0)) || ((y%2==0) && (x%2 == 0)))){
@@ -51,52 +50,98 @@ public class Jogo {
                 }
             }
         }
+        
     }
     
     /**
-     * Comanda uma Pe�a na posicao (origemX, origemY) fazer um movimento 
+     * Comanda uma Peça na posicao (origemX, origemY) fazer um movimento 
      * para (destinoX, destinoY).
      * 
-     * @param origemX linha da Casa de origem.
-     * @param origemY coluna da Casa de origem.
-     * @param destinoX linha da Casa de destino.
-     * @param destinoY coluna da Casa de destino.
+     * para origemX linha da Casa de origem.
+     * para origemY coluna da Casa de origem.
+     * para destinoX linha da Casa de destino.
+     * para destinoY coluna da Casa de destino.
      */
-    public void moverPeca(int origemX, int origemY, int destinoX, int destinoY) {
+    public void jogar(int origemX, int origemY, int destinoX, int destinoY) {
         Casa origem = tabuleiro.getCasa(origemX, origemY);
         Casa destino = tabuleiro.getCasa(destinoX, destinoY);
         Peca peca = origem.getPeca();
-        boolean podeIR = destino.possuiPeca();
-        
-        if ((nPecasBrancas != 0) && (nPecasVermelhas != 0)){
-            //Verifica o numero de peças, quando não tiver mais peças diz quem ganhou
-            if (((peca.getTipo() == peca.PEDRA_BRANCA) || (peca.getTipo() == peca.DAMA_BRANCA)) && (vezJogar)){
-                //Verifica se o tipo de peça é branca
-                if (((destinoX%2 == 0) && destinoY % 2 == 0) ||((destinoX%2 != 0) && destinoY % 2 != 0)){ 
-                    // Permite o Movimento em Diiagonal
-                    if (!podeIR){
-                        if (!comerSeguido){
-                            if (destinoY == origemY+1){
-                                peca.MovimentoSimples(origem, destino, peca);
-                            }
-                        }
-                    }
-                }
-            }
-                
-        }
-        else if(nPecasBrancas == 0){
+        //Verifica o numero de Pecas e Encerra o Jogo
+        if(nPecasBrancas == 0){
             JOptionPane.showMessageDialog(null, "O jogo Acabou\nAs Vermelhas Vencem!");
         }
         else if(nPecasVermelhas == 0){
             JOptionPane.showMessageDialog(null, "O jogo Acabou\nAs Brancas Vencem!");
         }
+        // Se não encerra ele verifica se é possivel fazer jogadas
+        else if ((nPecasBrancas != 0) && (nPecasVermelhas != 0)){
+            if ((peca.getTipo() == peca.PEDRA_VERMELHA) || (peca.getTipo() == peca.PEDRA_BRANCA)){
+                if ((destinoX == origemX + 1) || (destinoX == origemX - 1)){
+                    peca.movimentoSimplesPeca(origem, destino, peca, this);
+                }
+                else if ((destinoX == origemX + 2) || (destinoX == origemX - 2)){
+                    peca.capturaPeca(origem, destino, peca, this);
+                }    
+            }
+            if ((peca.getTipo() == peca.DAMA_BRANCA) || (peca.getTipo() == peca.DAMA_VERMELHA)){
+                if ((destinoX == origemX + 1) || (destinoX == origemX - 1)){
+                    peca.movimentoSimplesDama(origem, destino, peca, this);
+                }
+                else if ((destinoX == origemX + 2) || (destinoX == origemX - 2)){
+                    peca.capturaPeca(origem, destino, peca, this);
+                }    
+            }
+        }
+        
     }
     
     /**
-     * @return o Tabuleiro em jogo.
+     * retorna o Tabuleiro em jogo.
      */
     public Tabuleiro getTabuleiro() {
         return tabuleiro;
     }
+    
+    /** 
+     * Decrementa as peças Brancas
+     */
+    public void decrementaBrancas(){
+        nPecasBrancas--;
+    }
+    
+    /** 
+     * Decrementa as peças vermelhas
+     */
+    public void decrementaVermelhas(){
+        nPecasVermelhas--;
+    }
+    /**
+     * Passa a Vez de Jogar
+     */
+    public void passarVez(){
+        vezJogar = !vezJogar;
+    }
+    
+    /**
+     * Retorna de quem é a Vez de jogar
+     */
+    public boolean vezJogador(){
+        return vezJogar;
+    }
+    
+    /**
+     * Retorna de se Pode Comer Seguido
+     */
+    public boolean podeComerSeguido(){
+        return comerSeguido;
+    }
+    
+    /**
+     * Altera a variavel comer seguido e pecaAJogar
+     */
+    public void alteraComerSeguido(boolean comeu, Peca newPeca){
+        comerSeguido = comeu;
+        pecaAJogar = newPeca;
+    }
+    
 }

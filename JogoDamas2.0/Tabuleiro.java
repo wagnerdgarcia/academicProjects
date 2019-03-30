@@ -25,7 +25,7 @@ public class Tabuleiro {
      * @return Casa na posicao (x,y)
      */
     public Casa getCasa(int x, int y) {
-        if ((x > 0 ) && (x < 7) && (y > 0) && (y < 7)){
+        if ((x >= 0 ) && (x <= 7) && (y >= 0) && (y <= 7)){
             return casas[x][y];
         }
         else{
