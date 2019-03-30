@@ -28,11 +28,12 @@ public class Jogo {
         vezJogar = true;
         comerSeguido = false;
         pecaAJogar = null;
+        
     }
     
     /**
-     * Posiciona pe�as no tabuleiro.
-     * Utilizado na inicializa�ao do jogo.
+     * Posiciona peças no tabuleiro.
+     * Utilizado na inicializaçao do jogo.
      */
     private void criarPecas() {
         
@@ -50,7 +51,7 @@ public class Jogo {
                 }
             }
         }
-        
+        JOptionPane.showMessageDialog(null, "Bom Jogo,\nJogardor da Vez\nÉ as Brancas!");
     }
     
     /**
@@ -92,7 +93,6 @@ public class Jogo {
                 }    
             }
         }
-        
     }
     
     /**
@@ -120,6 +120,17 @@ public class Jogo {
      */
     public void passarVez(){
         vezJogar = !vezJogar;
+        //Informa através da Janela o Jogador da Vez
+        System.out.println(vezJogar);
+        if (vezJogar){
+            JOptionPane.showMessageDialog(null, "Jogardor da Vez\nÉ as Brancas!");
+            System.out.println(vezJogar);
+        }
+        else if (!vezJogar){
+            JOptionPane.showMessageDialog(null, "Jogardor da Vez\nÉ as Vermelhas!");
+            System.out.println(vezJogar);
+        }
+        
     }
     
     /**
@@ -142,6 +153,9 @@ public class Jogo {
     public void alteraComerSeguido(boolean comeu, Peca newPeca){
         comerSeguido = comeu;
         pecaAJogar = newPeca;
+        if (comerSeguido){
+            JOptionPane.showMessageDialog(null, "Continue Jogando\nCom a Mesa Peça");
+        }
     }
     
 }
