@@ -44,6 +44,7 @@ public class Peca{
            ((destino.getCasaY() == origem.getCasaY()+1) &&
             ((destino.getCasaX() == origem.getCasaX()-1) || (destino.getCasaX() == origem.getCasaX()+1)))){
                 mover(destino);
+                virarDama(peca, destino);
                 jogo.passarVez();
         }
         //Movimento da Pedra Vermelha Simples
@@ -51,6 +52,7 @@ public class Peca{
            ((destino.getCasaY() == origem.getCasaY()-1) &&
             ((destino.getCasaX() == origem.getCasaX()-1) || (destino.getCasaX() == origem.getCasaX()+1)))){
                 mover(destino);
+                virarDama(peca, destino);
                 jogo.passarVez();
         }
     }
@@ -62,8 +64,7 @@ public class Peca{
         if(((peca.getTipo() == DAMA_BRANCA) && (!destino.possuiPeca()) && jogo.vezJogador())&& 
            ((destino.getCasaY() == origem.getCasaY()-1) &&
             ((destino.getCasaX() == origem.getCasaX()-1) || (destino.getCasaX() == origem.getCasaX()+1)))){
-                mover(destino);
-                virarDama(peca, destino);
+                mover(destino);;
                 virarPeca(peca, destino);
                 jogo.passarVez();
         }
@@ -72,7 +73,6 @@ public class Peca{
            ((destino.getCasaY() == origem.getCasaY()+1) &&
             ((destino.getCasaX() == origem.getCasaX()-1) || (destino.getCasaX() == origem.getCasaX()+1)))){
                 mover(destino);
-                virarDama(peca, destino);
                 virarPeca(peca, destino);
                 jogo.passarVez();
         }
@@ -100,7 +100,7 @@ public class Peca{
                 boolean objetivoV = ((objetivo.getTipo() == objetivo.PEDRA_VERMELHA) || 
                                      (objetivo.getTipo() == objetivo.DAMA_VERMELHA));
                 boolean podeIr = !destino.possuiPeca();
-                if ((tipoPB || tipoDB) && (objetivoV) && (podeIr)){
+                if ((tipoPB || tipoDB) && (objetivoV) && (podeIr) && (jogo.vezJogador())){
                     verificar.removerPeca();
                     peca.mover(destino);
                     jogo.decrementaVermelhas();
@@ -111,7 +111,7 @@ public class Peca{
                         jogo.passarVez();
                     }
                 }
-                else if ((tipoPV || tipoDV) && (objetivoB) && (podeIr)){
+                else if ((tipoPV || tipoDV) && (objetivoB) && (podeIr)&& (!jogo.vezJogador())){
                     verificar.removerPeca();
                     peca.mover(destino);
                     jogo.decrementaBrancas();
@@ -134,7 +134,7 @@ public class Peca{
                 boolean objetivoV = ((objetivo.getTipo() == objetivo.PEDRA_VERMELHA) || 
                                      (objetivo.getTipo() == objetivo.DAMA_VERMELHA));
                 boolean podeIr = !destino.possuiPeca();
-                if ((tipoPB || tipoDB) && (objetivoV) && (podeIr)){
+                if ((tipoPB || tipoDB) && (objetivoV) && (podeIr) && (jogo.vezJogador())){
                     verificar.removerPeca();
                     peca.mover(destino);
                     jogo.decrementaVermelhas();
@@ -145,7 +145,7 @@ public class Peca{
                         jogo.passarVez();
                     }
                 }
-                else if ((tipoPV || tipoDV) && (objetivoB) && (podeIr)){
+                else if ((tipoPV || tipoDV) && (objetivoB) && (podeIr) && (!jogo.vezJogador())){
                     verificar.removerPeca();
                     peca.mover(destino);
                     jogo.decrementaBrancas();
@@ -168,7 +168,7 @@ public class Peca{
                 boolean objetivoV = ((objetivo.getTipo() == objetivo.PEDRA_VERMELHA) || 
                                      (objetivo.getTipo() == objetivo.DAMA_VERMELHA));
                 boolean podeIr = !destino.possuiPeca();
-                if ((tipoPB || tipoDB) && (objetivoV) && (podeIr)){
+                if ((tipoPB || tipoDB) && (objetivoV) && (podeIr) && (jogo.vezJogador())){
                     verificar.removerPeca();
                     peca.mover(destino);
                     jogo.decrementaVermelhas();
@@ -179,7 +179,7 @@ public class Peca{
                         jogo.passarVez();
                     }
                 }
-                else if ((tipoPV || tipoDV) && (objetivoB)&& (podeIr)){
+                else if ((tipoPV || tipoDV) && (objetivoB)&& (podeIr) && (!jogo.vezJogador())){
                     verificar.removerPeca();
                     peca.mover(destino);
                     jogo.decrementaBrancas();
@@ -202,7 +202,7 @@ public class Peca{
                 boolean objetivoV = ((objetivo.getTipo() == objetivo.PEDRA_VERMELHA) || 
                                      (objetivo.getTipo() == objetivo.DAMA_VERMELHA));
                 boolean podeIr = !destino.possuiPeca();
-                if ((tipoPB || tipoDB) && (objetivoV) && (podeIr)){
+                if ((tipoPB || tipoDB) && (objetivoV) && (podeIr) && (jogo.vezJogador())){
                     verificar.removerPeca();
                     peca.mover(destino);
                     jogo.decrementaVermelhas();
@@ -213,7 +213,7 @@ public class Peca{
                         jogo.passarVez();
                     }
                 }
-                else if ((tipoPV || tipoDV) && (objetivoB)&& (podeIr)){
+                else if ((tipoPV || tipoDV) && (objetivoB)&& (podeIr) && (!jogo.vezJogador())){
                     verificar.removerPeca();
                     peca.mover(destino);
                     jogo.decrementaBrancas();

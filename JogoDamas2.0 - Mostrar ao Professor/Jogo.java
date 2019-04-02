@@ -76,20 +76,56 @@ public class Jogo {
         }
         // Se não encerra ele verifica se é possivel fazer jogadas
         else if ((nPecasBrancas != 0) && (nPecasVermelhas != 0)){
-            if ((peca.getTipo() == peca.PEDRA_VERMELHA) || (peca.getTipo() == peca.PEDRA_BRANCA)){
-                if ((destinoX == origemX + 1) || (destinoX == origemX - 1)){
+            if ((peca.getTipo() == peca.PEDRA_BRANCA) || (vezJogar)){
+                if (((destinoX == origemX + 1) || (destinoX == origemX - 1)) && (!comerSeguido)){
                     peca.movimentoSimplesPeca(origem, destino, peca, this);
                 }
-                else if ((destinoX == origemX + 2) || (destinoX == origemX - 2)){
-                    peca.capturaPeca(origem, destino, peca, this);
+                else if (((destinoX == origemX + 2) || (destinoX == origemX - 2))){
+                    if (!comerSeguido){
+                        peca.capturaPeca(origem, destino, peca, this);
+                    }
+                    else{
+                        peca.capturaPeca(origem, destino, pecaAJogar, this);
+                    }
                 }    
             }
-            if ((peca.getTipo() == peca.DAMA_BRANCA) || (peca.getTipo() == peca.DAMA_VERMELHA)){
-                if ((destinoX == origemX + 1) || (destinoX == origemX - 1)){
+            if ((peca.getTipo() == peca.PEDRA_VERMELHA) && (!vezJogar)){
+                if (((destinoX == origemX + 1) || (destinoX == origemX - 1)) && (!comerSeguido)){
+                    peca.movimentoSimplesPeca(origem, destino, peca, this);
+                }
+                else if (((destinoX == origemX + 2) || (destinoX == origemX - 2))){
+                    if (!comerSeguido){
+                        peca.capturaPeca(origem, destino, peca, this);
+                    }
+                    else{
+                        peca.capturaPeca(origem, destino, pecaAJogar, this);
+                    }
+                }    
+            }
+            else if ((peca.getTipo() == peca.DAMA_BRANCA) && (vezJogar)){
+                if (((destinoX == origemX + 1) || (destinoX == origemX - 1)) && (!comerSeguido)){
                     peca.movimentoSimplesDama(origem, destino, peca, this);
                 }
                 else if ((destinoX == origemX + 2) || (destinoX == origemX - 2)){
-                    peca.capturaPeca(origem, destino, peca, this);
+                    if (!comerSeguido){
+                        peca.capturaPeca(origem, destino, peca, this);
+                    }
+                    else{
+                        peca.capturaPeca(origem, destino, pecaAJogar, this);
+                    }
+                }    
+            }
+            else if ((peca.getTipo() == peca.DAMA_VERMELHA) && (!vezJogar)){
+                if (((destinoX == origemX + 1) || (destinoX == origemX - 1)) && (!comerSeguido)){
+                    peca.movimentoSimplesDama(origem, destino, peca, this);
+                }
+                else if ((destinoX == origemX + 2) || (destinoX == origemX - 2)){
+                    if (!comerSeguido){
+                        peca.capturaPeca(origem, destino, peca, this);
+                    }
+                    else{
+                        peca.capturaPeca(origem, destino, pecaAJogar, this);
+                    }
                 }    
             }
         }
@@ -121,14 +157,11 @@ public class Jogo {
     public void passarVez(){
         vezJogar = !vezJogar;
         //Informa através da Janela o Jogador da Vez
-        System.out.println(vezJogar);
         if (vezJogar){
             JOptionPane.showMessageDialog(null, "Jogardor da Vez\nÉ as Brancas!");
-            System.out.println(vezJogar);
         }
         else if (!vezJogar){
             JOptionPane.showMessageDialog(null, "Jogardor da Vez\nÉ as Vermelhas!");
-            System.out.println(vezJogar);
         }
         
     }
