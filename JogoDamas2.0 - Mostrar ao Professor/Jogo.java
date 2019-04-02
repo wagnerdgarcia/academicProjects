@@ -36,7 +36,6 @@ public class Jogo {
      * Utilizado na inicializaçao do jogo.
      */
     private void criarPecas() {
-        
         for (int y = 0; y<8; y++){
             for(int x = 0; x<8; x++){
                 if((y < 3) && (((y%2!=0) && (x%2 != 0)) || ((y%2==0) && (x%2 == 0)))){
@@ -67,7 +66,7 @@ public class Jogo {
         Casa origem = tabuleiro.getCasa(origemX, origemY);
         Casa destino = tabuleiro.getCasa(destinoX, destinoY);
         Peca peca = origem.getPeca();
-        //Verifica o numero de Pecas e Encerra o Jogo
+        //Verifica o numero de Pecas brancas e vermelhas e Encerra o Jogo
         if(nPecasBrancas == 0){
             JOptionPane.showMessageDialog(null, "O jogo Acabou\nAs Vermelhas Vencem!");
         }
@@ -78,52 +77,64 @@ public class Jogo {
         else if ((nPecasBrancas != 0) && (nPecasVermelhas != 0)){
             if ((peca.getTipo() == peca.PEDRA_BRANCA) || (vezJogar)){
                 if (((destinoX == origemX + 1) || (destinoX == origemX - 1)) && (!comerSeguido)){
+                    // Realiza o movimento simples das peças
                     peca.movimentoSimplesPeca(origem, destino, peca, this);
                 }
                 else if (((destinoX == origemX + 2) || (destinoX == origemX - 2))){
                     if (!comerSeguido){
+                        // Realiza o movimento de captura simples das peças
                         peca.capturaPeca(origem, destino, peca, this);
                     }
                     else{
+                        // Realiza o movimento de captura seguida das peças
                         peca.capturaPeca(origem, destino, pecaAJogar, this);
                     }
                 }    
             }
             if ((peca.getTipo() == peca.PEDRA_VERMELHA) && (!vezJogar)){
                 if (((destinoX == origemX + 1) || (destinoX == origemX - 1)) && (!comerSeguido)){
+                    // Realiza o movimento simples das peças
                     peca.movimentoSimplesPeca(origem, destino, peca, this);
                 }
                 else if (((destinoX == origemX + 2) || (destinoX == origemX - 2))){
                     if (!comerSeguido){
+                        // Realiza o movimento de captura simples das peças
                         peca.capturaPeca(origem, destino, peca, this);
                     }
                     else{
+                        // Realiza o movimento de captura seguida das peças
                         peca.capturaPeca(origem, destino, pecaAJogar, this);
                     }
                 }    
             }
             else if ((peca.getTipo() == peca.DAMA_BRANCA) && (vezJogar)){
                 if (((destinoX == origemX + 1) || (destinoX == origemX - 1)) && (!comerSeguido)){
+                    // Realiza o movimento de captura seguida das damas
                     peca.movimentoSimplesDama(origem, destino, peca, this);
                 }
                 else if ((destinoX == origemX + 2) || (destinoX == origemX - 2)){
                     if (!comerSeguido){
+                        // Realiza o movimento de captura simples das damas
                         peca.capturaPeca(origem, destino, peca, this);
                     }
                     else{
+                        // Realiza o movimento de captura seguida das damas
                         peca.capturaPeca(origem, destino, pecaAJogar, this);
                     }
                 }    
             }
             else if ((peca.getTipo() == peca.DAMA_VERMELHA) && (!vezJogar)){
                 if (((destinoX == origemX + 1) || (destinoX == origemX - 1)) && (!comerSeguido)){
+                    // Realiza o movimento simples das damas
                     peca.movimentoSimplesDama(origem, destino, peca, this);
                 }
                 else if ((destinoX == origemX + 2) || (destinoX == origemX - 2)){
                     if (!comerSeguido){
+                        // Realiza o movimento de captura simples das damas
                         peca.capturaPeca(origem, destino, peca, this);
                     }
                     else{
+                        // Realiza o movimento de captura seguida das damas
                         peca.capturaPeca(origem, destino, pecaAJogar, this);
                     }
                 }    
