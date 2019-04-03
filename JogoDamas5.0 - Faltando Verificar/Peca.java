@@ -18,8 +18,8 @@ public class Peca {
     public static final int DAMA_VERMELHA = 3;
     
     //Serão iniciadas durante o Jogo
-    private static boolean Branca;
-    private static boolean Vermelha;
+    public static boolean Branca;
+    public static boolean Vermelha;
 
     private Casa casa;
     private int tipo;
@@ -127,9 +127,7 @@ public class Peca {
         Branca = ((tipo == PEDRA_BRANCA) || (tipo == DAMA_BRANCA));
         Vermelha = ((tipo == PEDRA_VERMELHA) || (tipo == DAMA_VERMELHA));
         boolean mover = false;
-        if ((destino.getCasaY() == casa.getCasaY() + direcao) && 
-            ((Branca && jogo.vezJogador()) || (Vermelha && !jogo.vezJogador())) &&
-              !destino.possuiPeca()){
+        if ((destino.getCasaY() == casa.getCasaY() + direcao) && !destino.possuiPeca()){
             if(Math.abs(destino.getCasaX() - casa.getCasaX()) == 1){
                 moveInterno(destino);
                 mover = true;
@@ -158,14 +156,14 @@ public class Peca {
             int tipoAlvo = casaAlvo.getPeca().getTipo();
             boolean alvoBranca = ((tipoAlvo == PEDRA_BRANCA) || (tipoAlvo == DAMA_BRANCA));
             boolean alvoVermelha = ((tipoAlvo == PEDRA_VERMELHA) || (tipoAlvo == DAMA_VERMELHA));
-            if (Branca && alvoVermelha && jogo.vezJogador()){
+            if (Branca && alvoVermelha){
                 moveInterno(destino);
                 casaAlvo.removerPeca();
                 jogo.decrementaVermelhas();
                 mover = true;
                 pecaRealizouCaptura = true;
             }
-            else if (Vermelha && alvoBranca && !jogo.vezJogador()){
+            else if (Vermelha && alvoBranca){
                 moveInterno(destino);
                 casaAlvo.removerPeca();
                 jogo.decrementaBrancas();
@@ -224,5 +222,18 @@ public class Peca {
     
     public void setCaptura(){
         pecaRealizouCaptura = false;
+    }
+    /**
+     * Verifica o tipo de Peça a se Jogar
+     */
+    public boolean tipoPeca (){
+        Branca = ((tipo == PEDRA_BRANCA) || (tipo == DAMA_BRANCA));
+        Vermelha = ((tipo == PEDRA_VERMELHA) || (tipo == DAMA_VERMELHA));
+        if(Branca){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

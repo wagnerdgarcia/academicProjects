@@ -73,28 +73,28 @@ public class Jogo {
         else if(nPecasVermelhas == 0){
             JOptionPane.showMessageDialog(null, "O jogo Acabou\nAs Brancas Vencem!");
         }
-        // Se não encerra ele verifica se é possivel fazer jogadas
-        else if ((nPecasBrancas != 0) && (nPecasVermelhas != 0)){
-            if ((pecaAJogar == null) ||(pecaAJogar != null && pecaAJogar == peca)){
-                boolean jogou = peca.mover(destino, this);
-                boolean  continuar = true;
-                boolean entrou = false;
-                if (peca.pecaCapturou()){
-                    ArrayList <Casa> proximasCasas = tabuleiro.buscarProximasCasas(destino);
-                    for (Casa proximaCasa : proximasCasas){
-                        if(proximaCasa!= null && peca.CapturaSeguida(proximaCasa, this)){
-                            pecaAJogar = peca;
-                            continuar = false;
-                            entrou = true;
+        
+        if((peca.tipoPeca() && vezJogar) ||(!peca.tipoPeca() && !vezJogar)){
+            // Se não encerra ele verifica se é possivel fazer jogadas
+            if ((nPecasBrancas != 0) && (nPecasVermelhas != 0)){
+                if ((pecaAJogar == null) ||(pecaAJogar != null && pecaAJogar == peca)){
+                    boolean jogou = peca.mover(destino, this);
+                    boolean  continuar = true;
+                    if (peca.pecaCapturou()){
+                        ArrayList <Casa> proximasCasas = tabuleiro.buscarProximasCasas(destino);
+                        for (Casa proximaCasa : proximasCasas){
+                            if(proximaCasa!= null && peca.CapturaSeguida(proximaCasa, this)){
+                                pecaAJogar = peca;
+                                continuar = false;
+                            }
                         }
                     }
-                }
-                if (jogou && continuar){
-                    pecaAJogar = null;
-                    continuar = true;
-                    peca.setCaptura();
-                    System.out.println("Entrou");
-                    passarVez();
+                    if (jogou && continuar){
+                        pecaAJogar = null;
+                        continuar = true;
+                        peca.setCaptura();
+                        passarVez();
+                    }
                 }
             }
         }
