@@ -20,10 +20,10 @@ public class Jogo {
      */
     private void criarPecas() {
         Casa casa1 = tabuleiro.getCasa(0, 0);
-        Peca peca1 = new Peca(casa1, Peca.PEDRA_BRANCA);
+        Peca peca1 = new Peca(casa1, Peca.PEAO_BRANCO);
 
-        Casa casa2 = tabuleiro.getCasa(7, 7);
-        Peca peca2 = new Peca(casa2, Peca.DAMA_VERMELHA);
+        Casa casa2 = tabuleiro.getCasa(5, 5);
+        Peca peca2 = new Peca(casa2, Peca.PEAO_PRETO);
     }
     
     /**

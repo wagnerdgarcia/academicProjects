@@ -22,15 +22,24 @@ public class CasaGUI extends JButton {
     private static final Color COR_DESTAQUE = new Color(0, 1, 0, 0.4f);
     
     // Icones das pecas
-    private static final Icon PEDRA_BRANCA = new ImageIcon("imagens/pedra_branca.png");
-    private static final Icon DAMA_BRANCA = new ImageIcon("imagens/dama_branca.png");
-    private static final Icon PEDRA_VERMELHA = new ImageIcon("imagens/pedra_vermelha.png");
-    private static final Icon DAMA_VERMELHA = new ImageIcon("imagens/dama_vermelha.png");
+    private static final Icon PEAO_BRANCO = new ImageIcon("imagens/peao_branco.png");
+    private static final Icon TORRE_BRANCO = new ImageIcon("imagens/torre_branco.png");
+    private static final Icon CAVALO_BRANCO = new ImageIcon("imagens/cavalo_branco.png");
+    private static final Icon BISPO_BRANCO = new ImageIcon("imagens/bispo_branco.png");
+    private static final Icon RAINHA_BRANCO = new ImageIcon("imagens/rainha_branco.png");
+    private static final Icon REI_BRANCO = new ImageIcon("imagens/rei_branco.png");
+    
+    private static final Icon PEAO_PRETO = new ImageIcon("imagens/peao_preto.png");
+    private static final Icon TORRE_PRETO = new ImageIcon("imagens/torre_preto.png");
+    private static final Icon CAVALO_PRETO= new ImageIcon("imagens/cavalo_preto.png");
+    private static final Icon BISPO_PRETO = new ImageIcon("imagens/bispo_preto.png");
+    private static final Icon RAINHA_PRETO = new ImageIcon("imagens/rainha_preto.png");
+    private static final Icon REI_PRETO = new ImageIcon("imagens/rei_preto.png");
     
     // Cores das pecas
     public static final int SEM_PECA = -1;
     public static final int PECA_BRANCA = 0;
-    public static final int PECA_VERMELHA = 1;
+    public static final int PECA_PRETA = 1;
     
 
     private int x;
@@ -65,22 +74,54 @@ public class CasaGUI extends JButton {
         return y;
     }
 
-    public void desenharPedraBranca() {
-        setIcon(PEDRA_BRANCA);
+    public void desenharPeaoBranco() {
+        setIcon(PEAO_BRANCO);
+    }
+    
+    public void desenharTorreBranco() {
+        setIcon(TORRE_BRANCO);
+    }
+    
+    public void desenharCavaloBranco() {
+        setIcon(CAVALO_BRANCO);
     }
 
-    public void desenharPedraVermelha() {
-        setIcon(PEDRA_VERMELHA);
+    public void desenharBispoBranco() {
+        setIcon(BISPO_BRANCO);
+    }
+    
+    public void desenharRainhaBranco() {
+        setIcon(RAINHA_BRANCO);
+    }
+    
+    public void desenharReiBranco() {
+        setIcon(REI_BRANCO);
+    }
+    
+    public void desenharPeaoPreto() {
+        setIcon(PEAO_PRETO);
+    }
+    
+    public void desenharTorrePreto() {
+        setIcon(TORRE_PRETO);
+    }
+    
+    public void desenharCavaloPreto() {
+        setIcon(CAVALO_PRETO);
     }
 
-    public void desenharDamaBranca() {
-        setIcon(DAMA_BRANCA);
+    public void desenharBispoPreto() {
+        setIcon(BISPO_PRETO);
     }
-
-    public void desenharDamaVermelha() {
-        setIcon(DAMA_VERMELHA);
+    
+    public void desenharRainhaPreto() {
+        setIcon(RAINHA_PRETO);
     }
-
+    
+    public void desenharReiPreto() {
+        setIcon(REI_PRETO);
+    }
+    
     public void apagarPeca() {
         setIcon(null);
     }
@@ -92,11 +133,13 @@ public class CasaGUI extends JButton {
     public int getCorPeca() {
         Icon icone = getIcon();
         
-        if (icone == PEDRA_BRANCA || icone == DAMA_BRANCA) {
+        if (icone == PEAO_BRANCO || icone == TORRE_BRANCO || icone == CAVALO_BRANCO || icone == BISPO_BRANCO || 
+            icone == RAINHA_BRANCO || icone == REI_BRANCO) {
             return PECA_BRANCA;
         }
-        else if (icone == PEDRA_VERMELHA || icone == DAMA_VERMELHA) {
-             return PECA_VERMELHA;
+        else if (icone == PEAO_PRETO || icone == TORRE_PRETO || icone == CAVALO_PRETO || icone == BISPO_PRETO || 
+            icone == RAINHA_PRETO || icone == REI_PRETO) {
+             return PECA_PRETA;
         }
         else {
             return SEM_PECA;
