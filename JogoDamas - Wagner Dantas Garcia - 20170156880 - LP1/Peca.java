@@ -91,7 +91,7 @@ public class Peca {
             moveu = movimentoSimples(destino, jogo);
         }
         if(!moveu || pecaRealizouCaptura){    
-            moveu = Captura(destino, jogo);
+            moveu = captura(destino, jogo);
         }
         if(moveu){
             virarDama(destino);
@@ -141,7 +141,7 @@ public class Peca {
      * Movimentação de Captura de Peça
      * Retorna true se a peça realizou movimento, caso contrário retorna false.
      */
-    public boolean Captura(Casa destino, Jogo jogo){
+    public boolean captura(Casa destino, Jogo jogo){
         boolean mover = false;
         Casa casaAlvo = jogo.getTabuleiro().getCasa(((casa.getCasaX()+destino.getCasaX())/2), ((casa.getCasaY()+destino.getCasaY())/2));
         if(podeCapturar(destino, jogo)){
