@@ -8,19 +8,19 @@
  */
 public class Peca {
 
-    public static final int PEAO_BRANCO = 1;
-    public static final int TORRE_BRANCO = 2;
-    public static final int CAVALO_BRANCO = 3;
-    public static final int BISPO_BRANCO = 4;
-    public static final int RAINHA_BRANCO = 5;
-    public static final int REI_BRANCO = 6 ;
+    public static final Peao PEAO_BRANCO;
+    public static final Torre TORRE_BRANCO;
+    public static final Cavalo CAVALO_BRANCO;
+    public static final Bispo BISPO_BRANCO;
+    public static final Rainha RAINHA_BRANCO;
+    public static final Rei REI_BRANCO;
     
-    public static final int PEAO_PRETO = -1;
-    public static final int TORRE_PRETO = -2;
-    public static final int CAVALO_PRETO= -3;
-    public static final int BISPO_PRETO = -4;
-    public static final int RAINHA_PRETO = -5;
-    public static final int REI_PRETO = -6;
+    public static final Peao PEAO_PRETO;
+    public static final Torre TORRE_PRETO;
+    public static final Cavalo CAVALO_PRETO;
+    public static final Bispo BISPO_PRETO;
+    public static final Rainha RAINHA_PRETO;
+    public static final Rei REI_PRETO;
     
     private Casa casa;
     private int tipo;
