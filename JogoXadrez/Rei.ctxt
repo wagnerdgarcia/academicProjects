@@ -2,6 +2,9 @@
 comment0.target=Rei
 comment0.text=\r\n\ Escreva\ a\ descri\u00E7\u00E3o\ da\ classe\ Rei\ aqui.\r\n\ \r\n\ @author\ (seu\ nome)\ \r\n\ @version\ (n\u00FAmero\ de\ vers\u00E3o\ ou\ data)\r\n
 comment1.params=casa\ tipo
-comment1.target=Rei(Casa,\ int)
+comment1.target=Rei(Casa,\ boolean)
 comment1.text=\r\n\ Construtor\ para\ objetos\ da\ classe\ Rei\r\n
-numComments=2
+comment2.params=destino
+comment2.target=void\ mover(Casa)
+comment2.text=\r\n\ Movimenta\ a\ peca\ para\ uma\ nova\ casa.\r\n\ @param\ destino\ nova\ casa\ que\ ira\ conter\ esta\ peca.\r\n
+numComments=3

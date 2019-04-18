@@ -19,11 +19,7 @@ public class Jogo {
      * Utilizado na inicializa�ao do jogo.
      */
     private void criarPecas() {
-        Casa casa1 = tabuleiro.getCasa(0, 0);
-        Peca peca1 = new Peca(casa1, Peca.PEAO_BRANCO);
-
-        Casa casa2 = tabuleiro.getCasa(5, 5);
-        Peca peca2 = new Peca(casa2, Peca.PEAO_PRETO);
+        
     }
     
     /**
@@ -39,7 +35,7 @@ public class Jogo {
         Casa origem = tabuleiro.getCasa(origemX, origemY);
         Casa destino = tabuleiro.getCasa(destinoX, destinoY);
         Peca peca = origem.getPeca();
-        peca.mover(destino);
+        peca.mover(destino, this);
     }
     
     /**
