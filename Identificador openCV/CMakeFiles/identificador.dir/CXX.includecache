@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/wagner/Documentos/Projetos_GIT/academicProjects/Identificador openCV/identificador.cpp
+opencv2/core.hpp
+/home/wagner/Documentos/Projetos_GIT/academicProjects/Identificador openCV/opencv2/core.hpp
+opencv2/imgcodecs.hpp
+/home/wagner/Documentos/Projetos_GIT/academicProjects/Identificador openCV/opencv2/imgcodecs.hpp
+opencv2/highgui.hpp
+/home/wagner/Documentos/Projetos_GIT/academicProjects/Identificador openCV/opencv2/highgui.hpp
+iostream
+-
+

@@ -1,0 +1,3 @@
+/home/wagner/Documentos/Projetos_GIT/academicProjects/Identificador openCV/CMakeFiles/rebuild_cache.dir
+/home/wagner/Documentos/Projetos_GIT/academicProjects/Identificador openCV/CMakeFiles/identificador.dir
+/home/wagner/Documentos/Projetos_GIT/academicProjects/Identificador openCV/CMakeFiles/edit_cache.dir
