@@ -6,22 +6,19 @@
 
 using namespace cv;
 using namespace std;
-
+ 
 int retornaValor(vector<int>);
 vector <vector <Point>> Pontos(Mat);
 
 
 int main(){
-    Mat img = imread("exemplo2x.png", IMREAD_GRAYSCALE);
+    Mat img = imread("CROP.png", IMREAD_GRAYSCALE);
     if(img.empty()){
         cout << "A imagem não foi importada" << endl;
         return -1;
     }
     imshow("Imagem",img);
     
-    Rect r (55,34,88,154);
-    Mat rect = img(r);
-    //imshow("RECT", rect);
     vector <vector <Point>> segmentos;
 
     segmentos = Pontos(img);
@@ -30,6 +27,9 @@ int main(){
 
     for (int i = 0; i < segmentos[0].size(); i++){
         p1.push_back((int)img.at<uchar>(segmentos[0][i]));
+        cout << "segmentos[0][" << i << "] . x = " << segmentos[0][i].x;
+        cout << " segmentos[0][" << i << "] . y = " << segmentos[0][i].y;
+        cout << " segmentos[0][" << i << "] . Cor = " << (int)img.at<uchar>(segmentos[0][i]) << endl;
     }
     
     int var, gas = 10 * retornaValor(p1);
