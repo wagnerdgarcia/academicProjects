@@ -1,0 +1,66 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[bottom=3cm,top=3cm,left=2cm,right=2cm]{geometry}
+
+\author{Wagner Dantas Garcia }
+\title{Séries e Equações Diferenciais Ordinárias}
+\date{08 de Outubro de 2020}
+
+
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{multicol} 
+
+
+\begin{document}
+
+  \maketitle
+  \section{Sequencia}
+  \begin{itemize}
+    \item \large \textbf{O que é uma Sequência?}
+
+    Pode-se pensar numa sequência como uma lista de números escritos em uma ordem definida:
+    \begin{equation}
+        \{{a_1, a_2, a_3, a_4, ... , a_n}\}
+    \end{equation}
+    Observe que, para cada inteiro positivo n existe um número correspondente a n e, dessa forma, uma sequência pode ser definida como uma função cujo domínio é o conjunto dos inteiros positivos. Mas, geralmente, escrevemos a n em vez da notação de função f (n) para o valor da função no número n. 
+
+    Algumas sequências podem ser definidas dando uma fórmula para o n-ésimo termo.
+
+    \begin{equation}
+        Ex1.:\{{\frac{1}{2}, \frac{2}{3}, \frac{3}{4},..., \frac{N}{N+1}}\}
+    \end{equation}
+
+    \item \large \textbf{Qual o limite de uma Sequência no Infinito?}
+
+    Se pudermos tornar os termos $a_n$ tão próximos de L quanto quisermos ao fazer n suficientemente grande. Se $\lim_{n\to\infty} = a_n$ existir, dizemos que a sequência \textbf{converge} (ou é convergente). Caso contrário, dizemos que a sequência \textbf{diverge} (ou é divergente).
+
+    Uma sequência $a_n$ tem limite L e escrevemos $\lim_{n\to\infty} = a_n$ se, para cada $\varepsilon > $ 0 existir um inteiro correspondente N tal que se $n > N$ então $|a_n - l| < \varepsilon$.
+
+    \begin{equation}
+        \lim_{n\to\infty} \frac{n}{n+1} = \lim_{n\to\infty} \frac{1}{1+\frac{1}{n}} = \frac{\lim_{n\to\infty} 1 }{\lim_{n\to\infty}1 + \lim_{n\to\infty}\frac{1}{n}} = \frac{1}{1+0} = 1
+    \end{equation} \\
+
+
+
+    \subitem \large \textbf{Sequencias Geométrica}
+
+    A sequência $r^n$ é convergente se $ -1 < r \leq 1$ e divergente para todos os outros valores de r.
+    \begin{equation}
+        \lim_{n\to\infty} r^n
+    \end{equation}
+
+    \subitem \large \textbf{Sequencias monótona}
+
+    Uma sequência $a_n$ é chamada \textbf{crescente} se $a_n < a_n+1$ para todo $n \geq 1$ isso é,$a_1 < a_2 < a_3 < \dots$ . É chamado \textbf{decrescente} se $a_n > a_n+1$ para todo $n \geq 1$. Uma sequência é \textbf{monótona} se for crescente ou decrescente.
+
+    Uma sequência $a_n$ é \textbf{limitada superiormente} se existir um número M tal que $a_n < M$ para todo $n \geq 1$. Ela é \textbf{limitada inferiormente} se existir um número m tal que $m < a_n$ para todo $n \geq 1$. Se ela for limitada superior e inferiormente, então $a_n$ é uma sequência limitada.
+
+    \textbf{Teorema da Sequência Monótona:} Toda sequência monótona limitada é convergente.
+  
+  \end{itemize}
+  
+\end{document}
+
+$
